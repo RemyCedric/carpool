@@ -1,43 +1,39 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Entities;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Application.Features.WeatherForecasts.Commands.CreateWeatherForecast
+namespace Application.Features.WeatherForecasts.Commands.CreateWeatherForecast;
+
+public class CreateWeatherForecastCommand : IRequest<int>
 {
-    public class CreateWeatherForecastCommand : IRequest<int>
-    {
-        public string Summary { get; set; }
-        public int TemperatureC { get; set; }
+    public string Summary { get; set; } = "";
+    public int TemperatureC { get; set; }
 
+}
+
+public class CreateTodoListCommandHandler : IRequestHandler<CreateWeatherForecastCommand, int>
+{
+    private readonly IApplicationDbContext _context;
+    private readonly IDateTime _dateTime;
+
+    public CreateTodoListCommandHandler(IApplicationDbContext context, IDateTime dateTime)
+    {
+        _dateTime = dateTime;
+        _context = context;
     }
 
-    public class CreateTodoListCommandHandler : IRequestHandler<CreateWeatherForecastCommand, int>
+    public async Task<int> Handle(CreateWeatherForecastCommand request, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IDateTime _dateTime;
-
-        public CreateTodoListCommandHandler(IApplicationDbContext context, IDateTime dateTime)
+        var entity = new WeatherForecast
         {
-            _dateTime = dateTime;
-            _context = context;
-        }
+            Date = _dateTime.Now,
+            Summary = request.Summary,
+            TemperatureC = request.TemperatureC
+        };
 
-        public async Task<int> Handle(CreateWeatherForecastCommand request, CancellationToken cancellationToken)
-        {
-            var entity = new WeatherForecast
-            {
-                Date = _dateTime.Now,
-                Summary = request.Summary,
-                TemperatureC = request.TemperatureC
-            };
+        _context.WeatherForecasts.Add(entity);
 
-            _context.WeatherForecasts.Add(entity);
+        await _context.SaveChangesAsync(cancellationToken);
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return entity.Id;
-        }
+        return entity.Id;
     }
 }

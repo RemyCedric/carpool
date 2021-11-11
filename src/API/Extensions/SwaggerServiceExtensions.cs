@@ -1,24 +1,20 @@
-using System.Collections.Generic;
-using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
 
-namespace API.Extensions
+namespace API.Extensions;
+
+public static class SwaggerServiceExtensions
 {
-    public static class SwaggerServiceExtensions
+    public static IServiceCollection AddSwaggerServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddSwaggerServices(this IServiceCollection services)
+        services.AddSwaggerGen(c =>
         {
-            services.AddSwaggerGen(c =>
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "Type into the textbox: Bearer {your JWT token}.",
-                    Type = SecuritySchemeType.Http, //We set the scheme type to http since we're using bearer authentication
+                Description = "Type into the textbox: Bearer {your JWT token}.",
+                Type = SecuritySchemeType.Http, //We set the scheme type to http since we're using bearer authentication
                     Scheme = "bearer" //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement{
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement{
                     {
                         new OpenApiSecurityScheme{
                             Reference = new OpenApiReference{
@@ -27,11 +23,10 @@ namespace API.Extensions
                             }
                         },new List<string>()
                     }
-                });
             });
-            services.AddFluentValidationRulesToSwagger();
+        });
+        services.AddFluentValidationRulesToSwagger();
 
-            return services;
-        }
+        return services;
     }
 }

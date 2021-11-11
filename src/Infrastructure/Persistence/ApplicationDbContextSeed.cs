@@ -1,22 +1,16 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Infrastructure.Identity;
+﻿using Domain.Entities;
 using Infrastructure.Services;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence
+
+namespace Infrastructure.Persistence;
+
+public static class ApplicationDbContextSeed
 {
-    public static class ApplicationDbContextSeed
+    public static async Task SeedDefaultUserAsync(UserManager<ApplicationUser> userManager)
     {
-        public static async Task SeedDefaultUserAsync(UserManager<ApplicationUser> userManager)
+        if (!userManager.Users.Any())
         {
-            if (!userManager.Users.Any())
-            {
-                var users = new List<ApplicationUser>
+            var users = new List<ApplicationUser>
                 {
                     new ApplicationUser
                     {
@@ -30,38 +24,35 @@ namespace Infrastructure.Persistence
                     },
                 };
 
-                foreach (var user in users)
-                {
-                    await userManager.CreateAsync(user, "Pa$$word13");
-                }
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "Pa$$word13");
             }
         }
+    }
 
-        public static async Task SeedSampleDataAsync(ApplicationDbContext context)
+    public static async Task SeedSampleDataAsync(ApplicationDbContext context)
+    {
+
+        if (!context.WeatherForecasts.Any())
         {
+            var dateTime = new DateTimeService();
 
-            if (!context.WeatherForecasts.Any())
+            string[] Summaries = new[]
             {
-                var dateTime = new DateTimeService();
-
-                string[] Summaries = new[]
-                {
                     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
                 };
 
-                var rng = new Random();
+            var rng = new Random();
 
-                var weatherForecasts = Enumerable.Range(1, 10).Select(index => new WeatherForecast
-                {
-                    Date = dateTime.Now.AddDays(index),
-                    TemperatureC = rng.Next(-20, 55),
-                    Summary = Summaries[rng.Next(Summaries.Length)]
-                });
-                await context.WeatherForecasts.AddRangeAsync(weatherForecasts);
-                await context.SaveChangesAsync();
-            }
-
+            var weatherForecasts = Enumerable.Range(1, 10).Select(index => new WeatherForecast
+            {
+                Date = dateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            });
+            await context.WeatherForecasts.AddRangeAsync(weatherForecasts);
+            await context.SaveChangesAsync();
         }
-
     }
 }

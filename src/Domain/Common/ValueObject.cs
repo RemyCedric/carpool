@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
+﻿
 namespace Domain.Common
 {
     // Learn more: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/implement-value-objects
@@ -13,7 +11,7 @@ namespace Domain.Common
                 return false;
             }
 
-            return left?.Equals(right) != false;
+            return left?.Equals(right!) != false;
         }
 
         protected static bool NotEqualOperator(ValueObject left, ValueObject right)
@@ -23,7 +21,7 @@ namespace Domain.Common
 
         protected abstract IEnumerable<object> GetEqualityComponents();
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj == null || obj.GetType() != GetType())
             {

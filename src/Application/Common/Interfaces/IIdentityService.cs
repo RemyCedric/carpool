@@ -1,18 +1,16 @@
 ﻿using Application.Common.Models;
 using Domain.Entities;
-using System.Threading.Tasks;
 
-namespace Application.Common.Interfaces
+namespace Application.Common.Interfaces;
+
+public interface IIdentityService
 {
-    public interface IIdentityService
-    {
-        Task<string> GetUserNameAsync(string userId);
+    Task<string> GetUserNameAsync(string userId);
 
-        Task<(Result Result, string UserId)> CreateUserAsync(ApplicationUser user, string password);
+    Task<(Result Result, string UserId)> CreateUserAsync(ApplicationUser user, string password);
 
-        Task<Result> DeleteUserAsync(string userId);
+    Task<Result> DeleteUserAsync(string userId);
 
-        Task<ApplicationUser> GetUserLoggedAsync(string email, string password);
+    Task<ApplicationUser> GetUserLoggedAsync(string email, string password);
 
-    }
 }
