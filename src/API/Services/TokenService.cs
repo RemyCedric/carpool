@@ -1,46 +1,37 @@
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using Domain.Entities;
-using Infrastructure.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
-namespace API.Services
+namespace API.Services;
+
+public class TokenService
 {
-    public class TokenService
+    private readonly IConfiguration _config;
+    public TokenService(IConfiguration config)
     {
-        private readonly IConfiguration _config;
-        public TokenService(IConfiguration config)
-        {
-            _config = config;
-        }
+        _config = config;
+    }
 
-        public string CreateToken(ApplicationUser user)
-        {
-            var claims = new List<Claim>{
+    public string CreateToken(ApplicationUser user)
+    {
+        var claims = new List<Claim>{
                 new Claim(ClaimTypes.Name,user.UserName),
                 new Claim(ClaimTypes.NameIdentifier,user.Id),
                 new Claim(ClaimTypes.Email,user.Email)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWTTokenKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWTTokenKey"]));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7),
-                SigningCredentials = creds
-            };
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.Now.AddDays(7),
+            SigningCredentials = creds
+        };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+        var tokenHandler = new JwtSecurityTokenHandler();
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+        var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return tokenHandler.WriteToken(token);
-        }
+        return tokenHandler.WriteToken(token);
     }
 }

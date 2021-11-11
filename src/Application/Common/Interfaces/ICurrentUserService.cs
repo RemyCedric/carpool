@@ -1,8 +1,8 @@
-﻿namespace Application.Common.Interfaces
+﻿
+namespace Application.Common.Interfaces;
+
+public interface ICurrentUserService
 {
-    public interface ICurrentUserService
-    {
-        string UserId { get; }
-        string Email { get; }
-    }
+    string? UserId { get; }
+    string? Email { get; }
 }
