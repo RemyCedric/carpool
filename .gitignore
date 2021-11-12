@@ -247,4 +247,4 @@ _Pvt_Extensions
 ssl
 
 ### settings ###
-appSettings.json
+appsettings.Production.json
