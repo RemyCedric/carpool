@@ -1,13 +1,13 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
-import { useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import { Link as RouterLink } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
+import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -40,16 +40,15 @@ function Copyright({ sx }: ICopyrightProps) {
 const theme = createTheme();
 
 export default function Login(): React.ReactElement {
-    const [loginQuery, setLoginQuery] = useState<LoginQuery>({ email: '', password: '' });
+    const {
+        register,
+        handleSubmit,
+        formState: { isSubmitting, errors, isValid },
+    } = useForm<LoginQuery>({ mode: 'onTouched' });
 
-    const handleFormChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
-        setLoginQuery({ ...loginQuery, [name]: value });
-    };
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        agent.Account.login(loginQuery);
-    };
+    async function submitForm(data: FieldValues) {
+        await agent.Account.login(data as LoginQuery);
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -69,29 +68,47 @@ export default function Login(): React.ReactElement {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={handleSubmit(submitForm)} noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             fullWidth
                             label="Email Address"
-                            name="email"
-                            value={loginQuery.email}
-                            onChange={handleFormChange}
                             autoFocus
+                            {...register('email', {
+                                required: 'email required',
+                                pattern: {
+                                    value: /^[A-Za-z0-9._%+-]+@test.com$/,
+                                    message: `The email isn't valid, please enter an 'positivethinking.lu' email`,
+                                },
+                            })}
+                            error={!!errors.email}
+                            helperText={errors?.email?.message}
                         />
                         <TextField
                             margin="normal"
                             fullWidth
-                            name="password"
                             label="Password"
                             type="password"
-                            value={loginQuery.password}
-                            onChange={handleFormChange}
-                            autoComplete="current-password"
+                            {...register('password', {
+                                required: 'password required',
+                                pattern: {
+                                    value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+                                    message: `The password isn't valid, it should contain at least one upperase letter, one lowercase letter, one number thus one special character`,
+                                },
+                            })}
+                            error={!!errors.password}
+                            helperText={errors?.password?.message}
                         />
-                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                        <LoadingButton
+                            disabled={!isValid}
+                            loading={isSubmitting}
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
                             Sign In
-                        </Button>
+                        </LoadingButton>
                         <Grid container>
                             <Grid item xs>
                                 <Link component={RouterLink} to="/reset-password" variant="body2">
