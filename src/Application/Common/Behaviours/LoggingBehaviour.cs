@@ -1,6 +1,4 @@
-﻿using Application.Common.Interfaces;
-
-namespace Application.Common.Behaviours;
+﻿namespace Covoiturage.Application.Common.Behaviours;
 
 public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where TRequest : notnull
 {

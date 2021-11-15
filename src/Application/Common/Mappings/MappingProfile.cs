@@ -1,5 +1,4 @@
-﻿
-namespace Application.Common.Mappings;
+﻿namespace Covoiturage.Application.Common.Mappings;
 
 public class MappingProfile : Profile
 {

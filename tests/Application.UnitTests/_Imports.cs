@@ -1,0 +1,11 @@
+global using Covoiturage.Application.Common.Exceptions;
+global using Covoiturage.Application.Common.Mappings;
+global using Covoiturage.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
+global using Covoiturage.Domain.Entities;
+global using AutoMapper;
+global using FluentAssertions;
+global using FluentValidation.Results;
+global using Microsoft.Extensions.Logging;
+global using Moq;
+global using NUnit.Framework;
+global using System.Runtime.Serialization;

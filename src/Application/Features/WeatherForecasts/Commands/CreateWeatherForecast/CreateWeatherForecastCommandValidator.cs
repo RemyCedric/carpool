@@ -1,6 +1,4 @@
-﻿using Application.Common.Interfaces;
-
-namespace Application.Features.WeatherForecasts.Commands.CreateWeatherForecast;
+﻿namespace Covoiturage.Application.Features.WeatherForecasts.Commands.CreateWeatherForecast;
 
 public class CreateTodoListCommandValidator : AbstractValidator<CreateWeatherForecastCommand>
 {

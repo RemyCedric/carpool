@@ -1,25 +1,26 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-using Infrastructure.Identity;
-using Infrastructure.Persistence;
-using Infrastructure.Services;
+﻿using Covoiturage.Application.Common.Interfaces;
+using Covoiturage.Domain.Entities;
+using Covoiturage.Infrastructure.Identity;
+using Covoiturage.Infrastructure.Persistence;
+using Covoiturage.Infrastructure.Services;
 
-namespace Infrastructure;
+namespace Covoiturage.Infrastructure;
 
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddIdentityCore<ApplicationUser>(opt =>
-        {
-            opt.Password.RequireNonAlphanumeric = true;
-            opt.Password.RequireUppercase = true;
-            opt.Password.RequireDigit = true;
-            opt.SignIn.RequireConfirmedEmail = false;
-        })
-        .AddEntityFrameworkStores<ApplicationDbContext>()
-        .AddSignInManager<SignInManager<ApplicationUser>>()
-        .AddDefaultTokenProviders();
+                {
+                    opt.Password.RequiredLength = 8;
+                    opt.Password.RequireLowercase = true;
+                    opt.Password.RequireUppercase = true;
+                    opt.Password.RequireDigit = true;
+                    opt.SignIn.RequireConfirmedEmail = false;
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddSignInManager<SignInManager<ApplicationUser>>()
+                .AddDefaultTokenProviders();
 
 
         if (configuration.GetValue<bool>("UseInMemoryDatabase"))
@@ -29,19 +30,16 @@ public static class DependencyInjection
         }
         else
         {
-
-            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-            string connStr;
+            string connStr = String.Empty;
 
             // Depending on if in development or production, use either Heroku-provided
             // connection string, or development connection string from env var.
-            if (env == "Development")
+            if (!configuration.GetValue<bool>("UseProduction"))
             {
                 // Use connection string from file.
                 connStr = configuration.GetConnectionString("DefaultConnection");
             }
-            else
+            else if (configuration.GetValue<bool>("UseProduction") || Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
             {
                 // Use connection string provided at runtime by Heroku.
                 var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL")!;
@@ -77,5 +75,4 @@ public static class DependencyInjection
 
         return services;
     }
-
 }

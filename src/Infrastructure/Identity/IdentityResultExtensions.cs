@@ -1,6 +1,4 @@
-﻿using Application.Common.Models;
-
-namespace Infrastructure.Identity;
+﻿namespace Covoiturage.Infrastructure.Identity;
 
 public static class IdentityResultExtensions
 {

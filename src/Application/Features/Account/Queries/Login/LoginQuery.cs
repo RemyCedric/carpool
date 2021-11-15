@@ -1,7 +1,4 @@
-using Application.Common.Interfaces;
-using Domain.Entities;
-
-namespace Application.Features.Account.Queries.Login;
+namespace Covoiturage.Application.Features.Account.Queries.Login;
 
 public class LoginQuery : IRequest<ApplicationUser>
 {

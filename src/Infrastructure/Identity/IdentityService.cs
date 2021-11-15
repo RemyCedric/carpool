@@ -1,8 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Application.Common.Models;
-using Domain.Entities;
-
-namespace Infrastructure.Identity;
+﻿namespace Covoiturage.Infrastructure.Identity;
 
 public class IdentityService : IIdentityService
 {

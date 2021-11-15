@@ -1,8 +1,8 @@
-﻿using Application.Common.Interfaces;
-using Domain.Common;
-using Domain.Entities;
+﻿using Covoiturage.Application.Common.Interfaces;
+using Covoiturage.Domain.Common;
+using Covoiturage.Domain.Entities;
 
-namespace Infrastructure.Persistence;
+namespace Covoiturage.Infrastructure.Persistence;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
 {

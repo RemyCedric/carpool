@@ -1,5 +1,4 @@
-﻿
-namespace Application.Common.Models;
+﻿namespace Covoiturage.Application.Common.Models;
 
 public class Result
 {

@@ -1,7 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities;
-
-namespace Application.Features.WeatherForecasts.Commands.CreateWeatherForecast;
+﻿namespace Covoiturage.Application.Features.WeatherForecasts.Commands.CreateWeatherForecast;
 
 public class CreateWeatherForecastCommand : IRequest<int>
 {

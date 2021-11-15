@@ -1,5 +1,4 @@
-
-namespace Application.Features.Account.Queries.Login;
+namespace Covoiturage.Application.Features.Account.Queries.Login;
 
 public class LoginQueryValidator : AbstractValidator<LoginQuery>
 {

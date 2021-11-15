@@ -1,9 +1,6 @@
-﻿using Application.Common.Interfaces;
+﻿namespace Covoiturage.Infrastructure.Services;
 
-namespace Infrastructure.Services
+public class DateTimeService : IDateTime
 {
-    public class DateTimeService : IDateTime
-    {
-        public DateTime Now => DateTime.Now;
-    }
+    public DateTime Now => DateTime.Now;
 }

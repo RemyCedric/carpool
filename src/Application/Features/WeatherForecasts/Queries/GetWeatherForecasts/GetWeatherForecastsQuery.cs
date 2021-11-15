@@ -1,6 +1,6 @@
-﻿using Application.Common.Interfaces;
+﻿using Covoiturage.Application.Common.Interfaces;
 
-namespace Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
+namespace Covoiturage.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
 
 public class GetWeatherForecastsQuery : IRequest<IEnumerable<WeatherForecastDto>>
 {

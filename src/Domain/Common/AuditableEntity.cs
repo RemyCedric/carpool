@@ -1,5 +1,4 @@
-﻿
-namespace Domain.Common;
+﻿namespace Covoiturage.Domain.Common;
 
 public abstract class AuditableEntity
 {

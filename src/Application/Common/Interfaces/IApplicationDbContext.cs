@@ -1,6 +1,4 @@
-using Domain.Entities;
-
-namespace Application.Common.Interfaces;
+﻿namespace Covoiturage.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {

@@ -1,7 +1,7 @@
-using Application.Common.Mappings;
-using Domain.Entities;
+using Covoiturage.Application.Common.Mappings;
+using Covoiturage.Domain.Entities;
 
-namespace Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
+namespace Covoiturage.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
 
 public class WeatherForecastDto : IMapFrom<WeatherForecast>
 {
@@ -17,5 +17,5 @@ public class WeatherForecastDto : IMapFrom<WeatherForecast>
 
     public int TemperatureF { get; set; }
 
-    public string Summary { get; set; } = "";
+    public string? Summary { get; set; }
 }

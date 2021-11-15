@@ -1,11 +1,8 @@
-using Application.Common.Interfaces;
-using Domain.Entities;
 
-namespace Application.Features.Account.Commands.Register;
+namespace Covoiturage.Application.Features.Account.Commands.Register;
 
 public class RegisterCommand : IRequest<ApplicationUser>
 {
-    public String Username { get; set; } = "";
     public string Email { get; set; } = "";
     public string Password { get; set; } = "";
 }
@@ -22,7 +19,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Applicati
         var user = new ApplicationUser
         {
             Email = request.Email,
-            UserName = request.Username
+            UserName = request.Email
         };
         var result = await _identityService.CreateUserAsync(user, request.Password);
 

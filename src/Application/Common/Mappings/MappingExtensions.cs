@@ -1,6 +1,4 @@
-﻿using Application.Common.Models;
-
-namespace Application.Common.Mappings;
+﻿namespace Covoiturage.Application.Common.Mappings;
 
 public static class MappingExtensions
 {

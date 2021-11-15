@@ -1,0 +1,17 @@
+global using Covoiturage.Application.Common.Exceptions;
+global using Covoiturage.Application.Common.Interfaces;
+global using Covoiturage.Domain.Entities;
+global using Covoiturage.Infrastructure.Identity;
+global using Covoiturage.Infrastructure.Persistence;
+global using Covoiturage.WebUI.Extensions;
+global using FluentAssertions;
+global using MediatR;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Moq;
+global using Npgsql;
+global using NUnit.Framework;
+global using Respawn;

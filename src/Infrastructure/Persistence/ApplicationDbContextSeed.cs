@@ -1,8 +1,8 @@
-﻿using Domain.Entities;
-using Infrastructure.Services;
+﻿using Covoiturage.Domain.Entities;
+using Covoiturage.Infrastructure.Services;
 
 
-namespace Infrastructure.Persistence;
+namespace Covoiturage.Infrastructure.Persistence;
 
 public static class ApplicationDbContextSeed
 {

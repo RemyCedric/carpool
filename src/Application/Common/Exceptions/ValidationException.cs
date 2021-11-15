@@ -1,5 +1,4 @@
-
-namespace Application.Common.Exceptions;
+﻿namespace Covoiturage.Application.Common.Exceptions;
 
 public class ValidationException : Exception
 {

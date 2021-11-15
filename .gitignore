@@ -233,18 +233,8 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 /NDependOut
+/covoiturage.ndproj
 /.mfractor
 
-### vscode ###
-.vscode/*
-
-# End of https://www.toptal.com/developers/gitignore/api/vscode,csharp
-
-### sqlLite ###
-*.db**
-
-### ssl ###
-ssl
-
-### settings ###
-appsettings.Production.json
+.vscode
+**/appsettings.Production.json

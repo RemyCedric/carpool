@@ -1,5 +1,4 @@
-
-namespace Application.Common.Behaviours;
+﻿namespace Covoiturage.Application.Common.Behaviours;
 
 public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {

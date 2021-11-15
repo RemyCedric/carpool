@@ -1,6 +1,4 @@
-using Domain.Common;
-
-namespace Domain.Entities;
+namespace Covoiturage.Domain.Entities;
 
 public class WeatherForecast : AuditableEntity
 {
