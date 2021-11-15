@@ -3,7 +3,6 @@ using Covoiturage.Application.Features.WeatherForecasts.Queries.GetWeatherForeca
 
 namespace Covoiturage.WebUI.Controllers;
 
-[Authorize]
 public class WeatherForecastController : ApiControllerBase
 {
 
