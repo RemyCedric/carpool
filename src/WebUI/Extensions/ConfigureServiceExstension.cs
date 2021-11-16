@@ -9,8 +9,6 @@ public static class ConfigureServiceExtension
         services.AddIdentityServices(configuration);
         services.AddOpenApiServices();
 
-
-
         services.AddDatabaseDeveloperPageExceptionFilter();
 
         services.AddSingleton<ICurrentUserService, CurrentUserService>();

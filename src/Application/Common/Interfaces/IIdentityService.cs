@@ -10,4 +10,6 @@ public interface IIdentityService
 
     Task<ApplicationUser> GetUserLoggedAsync(string email, string password);
 
+    Task<ApplicationUser> GetCurrentUserByEmailAsync(string email);
+
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -13,8 +13,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { LoginQuery } from '../../app/api/web-api-dtos';
-import agent from '../../app/api/agent';
+import { LoginDto } from '../../app/api/web-api-dtos';
+import { signInUser } from './AccountSlice';
+import { useAppDispatch } from '../../app/store';
 
 interface ICopyrightProps {
     sx: {
@@ -40,14 +41,17 @@ function Copyright({ sx }: ICopyrightProps) {
 const theme = createTheme();
 
 export default function Login(): React.ReactElement {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const {
         register,
         handleSubmit,
         formState: { isSubmitting, errors, isValid },
-    } = useForm<LoginQuery>({ mode: 'onTouched' });
+    } = useForm<LoginDto>({ mode: 'all' });
 
-    async function submitForm(data: FieldValues) {
-        await agent.Account.login(data as LoginQuery);
+    async function submitForm(loginDto: FieldValues) {
+        await dispatch(signInUser(loginDto as LoginDto));
+        navigate('/');
     }
 
     return (

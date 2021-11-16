@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { LoginQuery, RegisterCommand, ValueTupleOfStringAndString } from './web-api-dtos';
+import { LoginDto, RegisterDto, UserDto } from './web-api-dtos';
 //  import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
@@ -68,10 +68,9 @@ const requests = {
 };
 
 const Account = {
-    login: (loginQuery: LoginQuery): Promise<ValueTupleOfStringAndString> =>
-        requests.post<ValueTupleOfStringAndString>('account/login', loginQuery),
-    register: (registerCommand: RegisterCommand): Promise<ValueTupleOfStringAndString> =>
-        requests.post<ValueTupleOfStringAndString>('account/register', registerCommand),
+    login: (loginDto: LoginDto): Promise<UserDto> => requests.post<UserDto>('account/login', loginDto),
+    register: (registerDto: RegisterDto): Promise<UserDto> => requests.post<UserDto>('account/register', registerDto),
+    currentUser: (): Promise<UserDto> => requests.get<UserDto>('account'),
 };
 
 const agent = {

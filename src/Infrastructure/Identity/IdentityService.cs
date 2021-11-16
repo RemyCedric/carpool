@@ -1,4 +1,6 @@
-﻿namespace Covoiturage.Infrastructure.Identity;
+﻿using System.Security.Claims;
+
+namespace Covoiturage.Infrastructure.Identity;
 
 public class IdentityService : IIdentityService
 {
@@ -54,5 +56,10 @@ public class IdentityService : IIdentityService
         return result.ToApplicationResult();
     }
 
-
+    public async Task<ApplicationUser> GetCurrentUserByEmailAsync(string email)
+    {
+        var user = await _userManager.Users
+            .SingleOrDefaultAsync(x => x.Email == email);
+        return user!;
+    }
 }

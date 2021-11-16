@@ -9,17 +9,26 @@
 
 
 
-export interface ValueTupleOfStringAndString {
-    item1: string;
-    item2: string;
+export interface UserDto {
+    username: string;
+    token: string;
 }
 
-export interface LoginQuery {
+export interface ProblemDetails {
+    type: string | undefined;
+    title: string | undefined;
+    status: number | undefined;
+    detail: string | undefined;
+    instance: string | undefined;
+}
+
+export interface LoginDto {
     email: string;
     password: string;
 }
 
-export interface RegisterCommand {
+export interface RegisterDto {
+    username: string;
     email: string;
     password: string;
 }
@@ -29,14 +38,6 @@ export interface WeatherForecastDto {
     temperatureC: number;
     temperatureF: number;
     summary: string | undefined;
-}
-
-export interface ProblemDetails {
-    type: string | undefined;
-    title: string | undefined;
-    status: number | undefined;
-    detail: string | undefined;
-    instance: string | undefined;
 }
 
 export interface CreateWeatherForecastCommand {
