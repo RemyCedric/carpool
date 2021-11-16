@@ -18,7 +18,7 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
             .MustAsync(BeUniqueEmail).WithMessage("The specified Email already exists.");
         RuleFor(v => v.Password)
             .NotEmpty().WithMessage("The password should contain at least 8 characters")
-            .Length(8).WithMessage("The password should contain at least 8 characters")
+            .MinimumLength(8).WithMessage("The password should contain at least 8 characters")
             .Matches(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
                 .WithMessage($"The password isn't valid, it should contain at least one upperase letter, one lowercase letter, one number and one special character");
     }

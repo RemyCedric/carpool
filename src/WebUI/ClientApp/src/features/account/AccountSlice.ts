@@ -4,7 +4,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import agent from '../../app/api/agent';
-import { LoginDto, UserDto } from '../../app/api/web-api-dtos';
+import { LoginDto, RegisterDto, UserDto } from '../../app/api/web-api-dtos';
 
 interface AccountState {
     user: UserDto | null;
@@ -23,6 +23,19 @@ export const signInUser = createAsyncThunk<UserDto, LoginDto>('account/signInUse
         return thunkAPI.rejectWithValue({ error: error.data });
     }
 });
+
+export const registerUser = createAsyncThunk<UserDto, RegisterDto>(
+    'account/registerUser',
+    async (registerDto, thunkAPI: any) => {
+        try {
+            const user = await agent.Account.register(registerDto);
+            localStorage.setItem('user', JSON.stringify(user));
+            return user;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.data });
+        }
+    },
+);
 
 export const fetchCurrentUser = createAsyncThunk<UserDto>(
     'account/fetchCurrentUser',

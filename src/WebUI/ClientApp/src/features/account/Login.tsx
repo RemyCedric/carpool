@@ -15,27 +15,7 @@ import Container from '@mui/material/Container';
 import { LoginDto } from '../../app/api/web-api-dtos';
 import { signInUser } from './AccountSlice';
 import { useAppDispatch } from '../../app/store';
-
-interface ICopyrightProps {
-    sx: {
-        mt: number;
-        mb: number;
-    };
-}
-
-function Copyright({ sx }: ICopyrightProps) {
-    return (
-        <>
-            <Typography variant="body2" color="text.secondary" align="center" sx={sx}>
-                {'Copyright © '}
-                <Link color="inherit" href="https://positivethinking.tech/fr/" target="_blank">
-                    Positive Thinking company
-                </Link>{' '}
-                {new Date().getFullYear()}.
-            </Typography>
-        </>
-    );
-}
+import Copyright from './Copyright';
 
 export default function Login(): React.ReactElement {
     const navigate = useNavigate();
@@ -44,7 +24,7 @@ export default function Login(): React.ReactElement {
         register,
         handleSubmit,
         formState: { isSubmitting, errors, isValid },
-    } = useForm<LoginDto>({ mode: 'all' });
+    } = useForm<LoginDto>({ mode: 'onTouched', reValidateMode: 'onChange' });
 
     async function submitForm(loginDto: FieldValues) {
         await dispatch(signInUser(loginDto as LoginDto));
@@ -73,16 +53,11 @@ export default function Login(): React.ReactElement {
                         margin="normal"
                         fullWidth
                         label="Email Address"
-                        autoFocus
                         {...register('email', {
                             required: 'email required',
-                            pattern: {
-                                value: /^[A-Za-z0-9._%+-]+@test.com$/,
-                                message: `The email isn't valid, please enter an 'positivethinking.lu' email`,
-                            },
                         })}
                         error={!!errors.email}
-                        helperText={errors?.email?.message}
+                        helperText={errors.email?.message}
                     />
                     <TextField
                         margin="normal"
@@ -91,13 +66,9 @@ export default function Login(): React.ReactElement {
                         type="password"
                         {...register('password', {
                             required: 'password required',
-                            pattern: {
-                                value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-                                message: `The password isn't valid, it should contain at least one upperase letter, one lowercase letter, one number thus one special character`,
-                            },
                         })}
                         error={!!errors.password}
-                        helperText={errors?.password?.message}
+                        helperText={errors.password?.message}
                     />
                     <LoadingButton
                         disabled={!isValid}
@@ -111,7 +82,12 @@ export default function Login(): React.ReactElement {
                     </LoadingButton>
                     <Grid container>
                         <Grid item xs>
-                            <Link component={RouterLink} to="/reset-password" variant="body2">
+                            <Link
+                                component={RouterLink}
+                                to="/reset-password"
+                                onClick={(event) => event.preventDefault()}
+                                variant="body2"
+                            >
                                 Forgot password?
                             </Link>
                         </Grid>

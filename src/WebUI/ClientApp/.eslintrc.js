@@ -46,6 +46,7 @@ module.exports = {
                 mjs: 'never',
             },
         ],
+        'react/react-in-jsx-scope': 'off',
         'no-unused-expressions': ['error', { allowTernary: true }],
         'no-use-before-define': 'off',
         'react/require-default-props': ['error', { ignoreFunctionalComponents: true }],
