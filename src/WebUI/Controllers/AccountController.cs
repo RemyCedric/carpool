@@ -4,6 +4,7 @@ using Covoiturage.Application.Features.Account.Queries.Login;
 
 namespace Covoiturage.WebUI.Controllers;
 
+[Authorize]
 public class AccountController : ApiControllerBase
 {
     private readonly TokenService _tokenService;
@@ -15,7 +16,7 @@ public class AccountController : ApiControllerBase
 
     [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
@@ -26,10 +27,9 @@ public class AccountController : ApiControllerBase
         return Ok(CreateUserObject(userLogged));
     }
 
-
     [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
@@ -45,7 +45,6 @@ public class AccountController : ApiControllerBase
         return Ok(CreateUserObject(userRegistered));
     }
 
-    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
     [HttpGet]

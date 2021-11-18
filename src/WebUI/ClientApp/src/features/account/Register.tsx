@@ -1,3 +1,6 @@
+/* eslint-disable no-debugger */
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -20,16 +23,42 @@ export default function SignUp(): React.ReactElement {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    async function submitForm(registerDto: FieldValues) {
-        await dispatch(registerUser(registerDto as RegisterDto));
-        navigate('/');
-    }
-
     const {
         register,
         handleSubmit,
+        setError,
         formState: { isSubmitting, errors, isValid },
     } = useForm<RegisterDto>({ mode: 'onTouched', reValidateMode: 'onChange' });
+
+    function handleApiErrors(apiErrors: any) {
+        Object.keys(apiErrors).forEach((key) => {
+            Object.values(apiErrors[key]).forEach((apiError: any) => {
+                switch (key.toLowerCase()) {
+                    case 'username':
+                        setError('username', { message: apiError });
+                        break;
+                    case 'email':
+                        setError('email', { message: apiError });
+                        break;
+                    case 'password':
+                        setError('password', { message: apiError });
+                        break;
+                    default:
+                        break;
+                }
+            });
+        });
+    }
+
+    async function submitForm(registerDto: FieldValues) {
+        await dispatch(registerUser(registerDto as RegisterDto)).then(({ payload }: any) => {
+            if ({}.hasOwnProperty.call(payload, 'error') && {}.hasOwnProperty.call(payload.error, 'errors')) {
+                handleApiErrors(payload.error.errors);
+            } else if ({}.hasOwnProperty.call(payload, 'token')) {
+                navigate('/');
+            }
+        });
+    }
 
     return (
         <Container component="main" maxWidth="xs">

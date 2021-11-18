@@ -22,6 +22,14 @@ export interface ProblemDetails {
     instance: string | undefined;
 }
 
+export interface HttpValidationProblemDetails extends ProblemDetails {
+    errors: { [key: string]: string[]; };
+}
+
+export interface ValidationProblemDetails extends HttpValidationProblemDetails {
+    errors: { [key: string]: string[]; };
+}
+
 export interface LoginDto {
     email: string;
     password: string;

@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { store } from '../store';
@@ -25,21 +26,20 @@ axios.interceptors.response.use(
                     toast.error(data.title);
                     break;
                 case 401:
-                    toast.error(data.title);
+                    if (data) toast.error(data.title);
+                    //  Todo Replace with a proper way to handle Unauthorized requests
+                    else toast.error('Unauthorized');
                     break;
                 case 404:
-                    // history.push('/not-found');
                     break;
                 case 500:
                     toast.error('An error happened');
-                    //    store.commonStore.setServerError(data);
-                    //  history.push('/server-error');
                     break;
                 default:
                     break;
             }
         }
-        return Promise.reject(error);
+        return Promise.reject(error.response);
     },
 );
 

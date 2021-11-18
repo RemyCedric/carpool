@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-debugger */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -79,13 +80,15 @@ export const accountSlice = createSlice({
             localStorage.removeItem('user');
         });
         builder.addCase(signInUser.rejected, (_, action) => {
-            // eslint-disable-next-line no-console
             console.log(action.payload);
             localStorage.removeItem('user');
         });
-        builder.addMatcher(isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled), (state, action) => {
-            state.user = action.payload;
-        });
+        builder.addMatcher(
+            isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled, registerUser.fulfilled),
+            (state, action) => {
+                state.user = action.payload;
+            },
+        );
     },
 });
 
