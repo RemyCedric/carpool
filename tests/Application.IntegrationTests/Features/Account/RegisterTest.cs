@@ -20,13 +20,14 @@ public class RegisterTest : TestBase
     {
         var command = new RegisterCommand
         {
+            Username = "Username",
             Password = "Pa$$word13",
             Email = "test@test.com"
         };
 
         var user = await SendAsync(command);
 
-        user!.UserName.Should().Be("test");
+        user!.UserName.Should().Be("Username");
         user!.Email.Should().Be("test@test.com");
     }
 }

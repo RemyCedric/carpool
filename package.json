@@ -1,7 +1,6 @@
 {
   "name": "covoiturage",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "directories": {
     "test": "tests"
@@ -19,5 +18,6 @@
   "bugs": {
     "url": "https://github.com/RemyCedric/covoiturage/issues"
   },
-  "homepage": "https://github.com/RemyCedric/covoiturage#readme"
+  "homepage": "https://github.com/RemyCedric/covoiturage#readme",
+  "description": ""
 }
