@@ -13,7 +13,11 @@
         <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
 
         <!-- Set this to true if you enable server-side prerendering -->
-        <BuildServerSideRenderer>false</BuildServerSideRenderer>       
+        <BuildServerSideRenderer>false</BuildServerSideRenderer>     
+        <UserSecretsId>b255c430-370d-40d2-ac9b-e11349915c73</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerfileContext>..\..</DockerfileContext> 
+        <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
         <!-- Activate the use of xml implementation for swagger-->
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <NoWarn>$(NoWarn);1591</NoWarn>
@@ -33,6 +37,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
         <PackageReference Include="NSwag.AspNetCore" Version="13.14.3" />
         <PackageReference Include="NSwag.MSBuild" Version="13.14.3">
             <PrivateAssets>all</PrivateAssets>
