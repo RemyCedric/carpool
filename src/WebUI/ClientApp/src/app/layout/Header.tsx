@@ -26,7 +26,7 @@ export default function Header(): React.ReactElement {
 
     const handleLogOut = () => {
         dispatch(signOut());
-        navigate('/');
+        navigate('/login');
     };
 
     return (

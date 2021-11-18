@@ -8,6 +8,7 @@ import Login from '../../features/account/Login';
 import Register from '../../features/account/Register';
 import { useAppDispatch } from '../store';
 import Header from './Header';
+import RequireAuth from './RequireAuth';
 
 function App(): React.ReactElement {
     const dispatch = useAppDispatch();
@@ -22,10 +23,17 @@ function App(): React.ReactElement {
             <Container component="main" maxWidth={false} disableGutters>
                 <ToastContainer position="bottom-right" theme="colored" hideProgressBar />
                 <CssBaseline />
-                <Header />
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route
+                        path="/home"
+                        element={
+                            <RequireAuth>
+                                <Header />
+                            </RequireAuth>
+                        }
+                    />
                 </Routes>
             </Container>
         </ThemeProvider>

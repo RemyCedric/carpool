@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { toast } from 'react-toastify';
 import Copyright from './Copyright';
 import { useAppDispatch } from '../../app/store';
 import { registerUser } from './AccountSlice';
@@ -28,7 +29,7 @@ export default function SignUp(): React.ReactElement {
         handleSubmit,
         setError,
         formState: { isSubmitting, errors, isValid },
-    } = useForm<RegisterDto>({ mode: 'onTouched', reValidateMode: 'onChange' });
+    } = useForm<RegisterDto>({ mode: 'all', reValidateMode: 'onChange' });
 
     function handleApiErrors(apiErrors: any) {
         Object.keys(apiErrors).forEach((key) => {
@@ -55,7 +56,8 @@ export default function SignUp(): React.ReactElement {
             if ({}.hasOwnProperty.call(payload, 'error') && {}.hasOwnProperty.call(payload.error, 'errors')) {
                 handleApiErrors(payload.error.errors);
             } else if ({}.hasOwnProperty.call(payload, 'token')) {
-                navigate('/');
+                toast.success('Registration successful - you can now login');
+                navigate('/login');
             }
         });
     }

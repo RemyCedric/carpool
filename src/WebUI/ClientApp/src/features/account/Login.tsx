@@ -28,7 +28,7 @@ export default function Login(): React.ReactElement {
 
     async function submitForm(loginDto: FieldValues) {
         await dispatch(signInUser(loginDto as LoginDto));
-        navigate('/');
+        navigate('/home');
     }
 
     return (
