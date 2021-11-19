@@ -4,9 +4,6 @@ public class Program
 {
     public async static Task Main(string[] args)
     {
-        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "WebUI");
-        if (!Directory.Exists(filePath)) Directory.CreateDirectory(filePath);
-
         var host = CreateHostBuilder(args).Build();
 
         using (var scope = host.Services.CreateScope())

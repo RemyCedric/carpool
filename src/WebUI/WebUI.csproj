@@ -15,7 +15,7 @@
         <!-- Set this to true if you enable server-side prerendering -->
         <BuildServerSideRenderer>false</BuildServerSideRenderer>     
         <UserSecretsId>b255c430-370d-40d2-ac9b-e11349915c73</UserSecretsId>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
         <DockerfileContext>..\..</DockerfileContext> 
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
         <!-- Activate the use of xml implementation for swagger-->
