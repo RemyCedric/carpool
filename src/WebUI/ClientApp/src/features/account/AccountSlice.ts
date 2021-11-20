@@ -9,10 +9,12 @@ import { LoginDto, RegisterDto, UserDto } from '../../app/api/web-api-dtos';
 
 interface AccountState {
     user: UserDto | null;
+    loading: boolean;
 }
 
 const initialState: AccountState = {
     user: null,
+    loading: true,
 };
 
 export const signInUser = createAsyncThunk<UserDto, LoginDto>('account/signInUser', async (loginDto, thunkAPI: any) => {
@@ -41,6 +43,7 @@ export const registerUser = createAsyncThunk<UserDto, RegisterDto>(
 export const fetchCurrentUser = createAsyncThunk<UserDto>(
     'account/fetchCurrentUser',
     async (_, thunkAPI: any) => {
+        thunkAPI.dispatch(setLoading(true));
         const token = localStorage.getItem('user');
         if (token) thunkAPI.dispatch(setUser(JSON.parse(token)));
         try {
@@ -56,6 +59,7 @@ export const fetchCurrentUser = createAsyncThunk<UserDto>(
             if (!localStorage.getItem('user')) return false;
             return true;
         },
+        dispatchConditionRejection: true,
     },
 );
 
@@ -64,7 +68,6 @@ export const accountSlice = createSlice({
     name: 'account',
     initialState,
     reducers: {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         signOut: (state) => {
             state.user = null;
             localStorage.removeItem('user');
@@ -72,24 +75,31 @@ export const accountSlice = createSlice({
         setUser: (state, action) => {
             state.user = action.payload;
         },
+        setLoading: (state, action) => {
+            state.loading = action.payload;
+        },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchCurrentUser.rejected, (state) => {
-            toast.error('Session expired - please login again');
+        builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
+            state.user = action.payload;
+            state.loading = false;
+        });
+        builder.addCase(fetchCurrentUser.rejected, (state, { error }) => {
+            if (!({}.hasOwnProperty.call(error, 'name') && error.name === 'ConditionError')) {
+                console.log(error);
+                toast.error('Session expired - please login again');
+            }
             state.user = null;
+            state.loading = false;
             localStorage.removeItem('user');
         });
-        builder.addCase(signInUser.rejected, (_, action) => {
-            console.log(action.payload);
+        builder.addCase(signInUser.rejected, () => {
             localStorage.removeItem('user');
         });
-        builder.addMatcher(
-            isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled, registerUser.fulfilled),
-            (state, action) => {
-                state.user = action.payload;
-            },
-        );
+        builder.addMatcher(isAnyOf(signInUser.fulfilled, registerUser.fulfilled), (state, action) => {
+            state.user = action.payload;
+        });
     },
 });
 
-export const { signOut, setUser } = accountSlice.actions;
+export const { signOut, setUser, setLoading } = accountSlice.actions;

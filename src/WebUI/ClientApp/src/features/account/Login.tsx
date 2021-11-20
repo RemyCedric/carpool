@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -19,6 +20,7 @@ import Copyright from './Copyright';
 
 export default function Login(): React.ReactElement {
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useAppDispatch();
     const {
         register,
@@ -28,7 +30,7 @@ export default function Login(): React.ReactElement {
 
     async function submitForm(loginDto: FieldValues) {
         await dispatch(signInUser(loginDto as LoginDto));
-        navigate('/home');
+        navigate(location.state && location.state.from !== '/register' ? location.state.from : '/');
     }
 
     return (

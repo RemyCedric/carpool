@@ -1,18 +1,22 @@
-import { Container, createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+/* eslint-disable no-console */
+import { CircularProgress, Container, createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchCurrentUser } from '../../features/account/AccountSlice';
 import Login from '../../features/account/Login';
 import Register from '../../features/account/Register';
-import { useAppDispatch } from '../store';
-import Header from './Header';
+import { useAppDispatch, useAppSelector } from '../store';
+import Main from './main/Main';
 import RequireAuth from './RequireAuth';
 
 function App(): React.ReactElement {
     const dispatch = useAppDispatch();
+    const { loading, user } = useAppSelector((state) => state.account);
+
     useEffect(() => {
+        console.log('useEffect App');
         dispatch(fetchCurrentUser());
     }, [dispatch]);
 
@@ -23,18 +27,27 @@ function App(): React.ReactElement {
             <Container component="main" maxWidth={false} disableGutters>
                 <ToastContainer position="bottom-right" theme="colored" hideProgressBar />
                 <CssBaseline />
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route
-                        path="/home"
-                        element={
-                            <RequireAuth>
-                                <Header />
-                            </RequireAuth>
-                        }
-                    />
-                </Routes>
+                {loading ? (
+                    <CircularProgress />
+                ) : (
+                    <Routes>
+                        <Route path="/" element={user ? <Navigate replace to="/events" /> : <Login />} />
+                        <Route
+                            path="/*"
+                            element={
+                                user ? (
+                                    <RequireAuth>
+                                        <Main />
+                                    </RequireAuth>
+                                ) : (
+                                    <Navigate replace to="/login" />
+                                )
+                            }
+                        />
+                        <Route path="/login" element={user ? <Navigate replace to="/events" /> : <Login />} />
+                        <Route path="/register" element={user ? <Navigate replace to="/events" /> : <Register />} />
+                    </Routes>
+                )}
             </Container>
         </ThemeProvider>
     );

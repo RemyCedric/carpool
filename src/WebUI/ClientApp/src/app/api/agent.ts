@@ -23,14 +23,8 @@ axios.interceptors.response.use(
             const { data, status } = error.response;
             switch (status) {
                 case 400:
-                    toast.error(data.title);
-                    break;
                 case 401:
-                    if (data) toast.error(data.title);
-                    //  Todo Replace with a proper way to handle Unauthorized requests
-                    else toast.error('Unauthorized');
-                    break;
-                case 404:
+                    toast.error(data.title);
                     break;
                 case 500:
                     toast.error('An error happened');

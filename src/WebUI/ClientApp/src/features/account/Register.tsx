@@ -4,7 +4,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import { LoadingButton } from '@mui/lab';
@@ -22,6 +22,7 @@ import { RegisterDto } from '../../app/api/web-api-dtos';
 
 export default function SignUp(): React.ReactElement {
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useAppDispatch();
 
     const {
@@ -57,7 +58,7 @@ export default function SignUp(): React.ReactElement {
                 handleApiErrors(payload.error.errors);
             } else if ({}.hasOwnProperty.call(payload, 'token')) {
                 toast.success('Registration successful - you can now login');
-                navigate('/login');
+                navigate('/login', { state: { from: location.pathname } });
             }
         });
     }

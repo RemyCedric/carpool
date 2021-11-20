@@ -9,8 +9,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Link } from '@mui/material';
-import { useAppDispatch } from '../store';
-import { signOut } from '../../features/account/AccountSlice';
+import { useAppDispatch } from '../../store';
+import { signOut } from '../../../features/account/AccountSlice';
 
 export default function Header(): React.ReactElement {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
