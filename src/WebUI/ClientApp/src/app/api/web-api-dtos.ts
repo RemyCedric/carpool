@@ -45,6 +45,7 @@ export interface EventDto {
     id: number;
     nom: string;
     date: Date;
+    url: string;
 }
 
 export interface FileParameter {
