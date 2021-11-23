@@ -47,18 +47,6 @@ export interface EventDto {
     date: Date;
 }
 
-export interface WeatherForecastDto {
-    date: Date;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string | undefined;
-}
-
-export interface CreateWeatherForecastCommand {
-    summary: string;
-    temperatureC: number;
-}
-
 export interface FileParameter {
     data: any;
     fileName: string;

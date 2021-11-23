@@ -20,7 +20,7 @@ public class MappingTests
     }
 
     [Test]
-    [TestCase(typeof(WeatherForecast), typeof(WeatherForecastDto))]
+    //    [TestCase(typeof(WeatherForecast), typeof(WeatherForecastDto))]
     public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
     {
         var instance = GetInstanceOf(source);

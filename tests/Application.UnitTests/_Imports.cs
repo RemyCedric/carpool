@@ -1,6 +1,5 @@
 global using Covoiturage.Application.Common.Exceptions;
 global using Covoiturage.Application.Common.Mappings;
-global using Covoiturage.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
 global using Covoiturage.Domain.Entities;
 global using AutoMapper;
 global using FluentAssertions;

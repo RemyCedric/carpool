@@ -16,8 +16,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
         _dateTime = dateTime;
     }
 
-    public DbSet<WeatherForecast> WeatherForecasts => Set<WeatherForecast>();
-
     public DbSet<Event> Events => Set<Event>();
 
 
