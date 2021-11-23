@@ -58,3 +58,8 @@ export interface CreateWeatherForecastCommand {
     summary: string;
     temperatureC: number;
 }
+
+export interface FileParameter {
+    data: any;
+    fileName: string;
+}

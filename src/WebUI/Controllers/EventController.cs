@@ -1,4 +1,5 @@
 
+using Covoiturage.Application.Features.Events.Commands.CreateEvent;
 using Covoiturage.Application.Features.Events.Queries;
 using Covoiturage.Application.Features.Events.Queries.GetEvents;
 
@@ -15,6 +16,13 @@ public class EventController : ApiControllerBase
         return await Mediator.Send(new GetEventsQuery());
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [HttpPost]
+    public async Task<int> Post([FromForm] CreateEventCommand command)
+    {
+        return await Mediator.Send(command);
+    }
 }
 
 

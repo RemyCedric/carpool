@@ -6,7 +6,6 @@ public static class ApplicationDbContextSeed
     public static async Task SeedDefaultDatabaseAsync(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         await SeedDefaultUserAsync(userManager);
-        await SeedSampleDataAsync(context);
         await SeedSampleEventAsync(context);
     }
 
@@ -35,47 +34,46 @@ public static class ApplicationDbContextSeed
         }
     }
 
-    public static async Task SeedSampleDataAsync(ApplicationDbContext context)
-    {
 
-        if (!context.WeatherForecasts.Any())
-        {
-            var dateTime = new DateTimeService();
-
-            string[] Summaries = new[]
-            {
-                    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-                };
-
-            var rng = new Random();
-
-            var weatherForecasts = Enumerable.Range(1, 10).Select(index => new WeatherForecast
-            {
-                Date = dateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            });
-            await context.WeatherForecasts.AddRangeAsync(weatherForecasts);
-            await context.SaveChangesAsync();
-        }
-    }
     public static async Task SeedSampleEventAsync(ApplicationDbContext context)
     {
-
+        //        var Photos =
         if (!context.Events.Any())
         {
-            string[] names = new[]{
-                "Poker","AfterWorks","Lunch","Party","Meeting"
+            var events = new List<Event>{
+                new Event{
+                Nom="Christmas Party",
+                Date = new DateTime(2021,12,09,18,00,00),
+                Photo= new Photo{
+                    Id="kr4bl7jjsgomqgvctyiz",
+                    Url="https://res.cloudinary.com/reactivities404found/image/upload/v1637676997/kr4bl7jjsgomqgvctyiz.jpg"
+                    }
+                },
+                new Event{
+                Nom="Poker",
+                Date = new DateTime(2021,12,09,18,00,00),
+                Photo= new Photo{
+                    Id="rqxy0dorqjsgeoxiixos",
+                    Url="https://res.cloudinary.com/reactivities404found/image/upload/v1637678895/rqxy0dorqjsgeoxiixos.jpg"
+                    }
+                },
+                new Event{
+                Nom="Party",
+                Date = new DateTime(2021,12,09,18,00,00),
+                Photo= new Photo{
+                    Id="aafyl3bybgheacc8nuan	",
+                    Url="https://res.cloudinary.com/reactivities404found/image/upload/v1637678974/aafyl3bybgheacc8nuan.jpg"
+                    }
+                },
+                new Event{
+                Nom="Easter Egg Party",
+                Date = new DateTime(2021,12,09,18,00,00),
+                Photo= new Photo{
+                    Id="rznc2xcxezem1jf902sq",
+                    Url="https://res.cloudinary.com/reactivities404found/image/upload/v1637679021/rznc2xcxezem1jf902sq.jpg"
+                    }
+                },
             };
-            var dateTime = new DateTimeService();
-            var rng = new Random();
-
-            var events = Enumerable.Range(1, 5).Select(index => new Event
-            {
-                Nom = names[index - 1],
-                Date = dateTime.Now.AddDays(rng.Next(index, 33))
-            });
-
             await context.Events.AddRangeAsync(events);
             await context.SaveChangesAsync();
         }
