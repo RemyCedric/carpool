@@ -1,6 +1,7 @@
 global using Covoiturage.Application.Common.Models;
 global using Covoiturage.Application.Common.Interfaces;
 global using Covoiturage.Domain.Entities;
+global using Covoiturage.Infrastructure.Services;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.Extensions.DependencyInjection;

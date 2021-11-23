@@ -19,9 +19,7 @@ public class Program
                 }
 
                 var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-
-                await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager);
-                await ApplicationDbContextSeed.SeedSampleDataAsync(context);
+                await ApplicationDbContextSeed.SeedDefaultDatabaseAsync(context, userManager);
             }
             catch (Exception ex)
             {

@@ -1,11 +1,15 @@
-﻿using Covoiturage.Domain.Entities;
-using Covoiturage.Infrastructure.Services;
-
-
-namespace Covoiturage.Infrastructure.Persistence;
+﻿namespace Covoiturage.Infrastructure.Persistence;
 
 public static class ApplicationDbContextSeed
 {
+
+    public static async Task SeedDefaultDatabaseAsync(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+    {
+        await SeedDefaultUserAsync(userManager);
+        await SeedSampleDataAsync(context);
+        await SeedSampleEventAsync(context);
+    }
+
     public static async Task SeedDefaultUserAsync(UserManager<ApplicationUser> userManager)
     {
         if (!userManager.Users.Any())
@@ -52,6 +56,27 @@ public static class ApplicationDbContextSeed
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
             await context.WeatherForecasts.AddRangeAsync(weatherForecasts);
+            await context.SaveChangesAsync();
+        }
+    }
+    public static async Task SeedSampleEventAsync(ApplicationDbContext context)
+    {
+
+        if (!context.Events.Any())
+        {
+            string[] names = new[]{
+                "Poker","AfterWorks","Lunch","Party","Meeting"
+            };
+            var dateTime = new DateTimeService();
+            var rng = new Random();
+
+            var events = Enumerable.Range(1, 5).Select(index => new Event
+            {
+                Nom = names[index - 1],
+                Date = dateTime.Now.AddDays(rng.Next(index, 33))
+            });
+
+            await context.Events.AddRangeAsync(events);
             await context.SaveChangesAsync();
         }
     }
