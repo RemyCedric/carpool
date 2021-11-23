@@ -18,6 +18,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 
     public DbSet<WeatherForecast> WeatherForecasts => Set<WeatherForecast>();
 
+    public DbSet<Event> Events => Set<Event>();
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
