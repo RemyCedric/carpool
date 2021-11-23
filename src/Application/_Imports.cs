@@ -1,4 +1,5 @@
 global using Covoiturage.Application.Common.Interfaces;
+global using Covoiturage.Application.Common.Mappings;
 global using Covoiturage.Application.Common.Models;
 global using Covoiturage.Domain.Entities;
 global using AutoMapper;

@@ -41,6 +41,12 @@ export interface RegisterDto {
     password: string;
 }
 
+export interface EventDto {
+    id: number;
+    nom: string;
+    date: Date;
+}
+
 export interface WeatherForecastDto {
     date: Date;
     temperatureC: number;

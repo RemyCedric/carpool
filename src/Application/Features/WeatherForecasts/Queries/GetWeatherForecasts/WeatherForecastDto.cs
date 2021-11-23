@@ -1,6 +1,3 @@
-using Covoiturage.Application.Common.Mappings;
-using Covoiturage.Domain.Entities;
-
 namespace Covoiturage.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
 
 public class WeatherForecastDto : IMapFrom<WeatherForecast>
