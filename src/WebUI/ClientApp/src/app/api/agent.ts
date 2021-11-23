@@ -52,8 +52,13 @@ const Account = {
     currentUser: (): Promise<UserDto> => requests.get<UserDto>('account'),
 };
 
+const Event = {
+    get: (): Promise<Event[]> => requests.get<Event[]>('event'),
+};
+
 const agent = {
     Account,
+    Event,
 };
 
 export default agent;
