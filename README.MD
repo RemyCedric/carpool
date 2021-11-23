@@ -20,9 +20,10 @@ The easiest way to get started is to install the [NuGet package](https://www.nug
 1. Install the latest [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
 2. Install the latest [Node.js LTS](https://nodejs.org/en/)
 3. Run `git clone https://github.com/RemyCedric/covoiturage.git` to pull the project
-4. Navigate to `src/WebUI/ClientApp` and run `npm install`
-5. Navigate to `src/WebUI/ClientApp` and run `npm start` to launch the front end (React)
-6. Navigate to `src/WebUI` and run `dotnet run` to launch the back end (ASP.NET Core Web API)
+4. Add your cloudinary configuration in your `src/WebUI/appsettings.json` file, should be created
+5. Navigate to `src/WebUI/ClientApp` and run `npm install`
+6. Navigate to `src/WebUI/ClientApp` and run `npm start` to launch the front end (React)
+7. Navigate to `src/WebUI` and run `dotnet run` to launch the back end (ASP.NET Core Web API)
 
 ### Docker Configuration
 
@@ -61,6 +62,9 @@ You need some `Config Vars`
 * `JWTTokenKey` at least 32 bits
 * `UseInMemoryDatabase` set to `false`
 * `UseProduction` set to `true`
+* `Cloudinary:ApiKey` filled with your Cloudinary configuration
+* `Cloudinary:ApiSecret` filled with your Cloudinary configuration
+* `Cloudinary:CloudName` filled with your Cloudinary configuration
 
 ### Database Configuration
 

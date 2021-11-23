@@ -1,10 +1,4 @@
-﻿using Covoiturage.Application.Common.Interfaces;
-using Covoiturage.Domain.Entities;
-using Covoiturage.Infrastructure.Identity;
-using Covoiturage.Infrastructure.Persistence;
-using Covoiturage.Infrastructure.Services;
-
-namespace Covoiturage.Infrastructure;
+﻿namespace Covoiturage.Infrastructure;
 
 public static class DependencyInjection
 {
@@ -68,6 +62,9 @@ public static class DependencyInjection
                 connStr,
                 b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
+
+        services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+        services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddTransient<IDateTime, DateTimeService>();

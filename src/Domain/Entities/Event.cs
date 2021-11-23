@@ -7,4 +7,6 @@ public class Event : AuditableEntity
     public String Nom { get; set; } = "";
 
     public DateTime Date { get; set; }
+
+    public Photo? Photo { get; set; }
 }
