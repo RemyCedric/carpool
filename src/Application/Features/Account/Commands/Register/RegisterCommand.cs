@@ -3,9 +3,9 @@ namespace Carpool.Application.Features.Account.Commands.Register;
 
 public class RegisterCommand : IRequest<ApplicationUser>
 {
-    public string Email { get; set; } = "";
-    public string Password { get; set; } = "";
-    public string Username { get; set; } = "";
+    public string Email { get; set; } = String.Empty;
+    public string Password { get; set; } = String.Empty;
+    public string Username { get; set; } = String.Empty;
 }
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ApplicationUser>
 {

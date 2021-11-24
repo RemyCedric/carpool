@@ -30,15 +30,15 @@ export default function Event(): React.ReactElement {
                                     <img
                                         src={`${event.url}?w=248&fit=crop&auto=format`}
                                         srcSet={`${event.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                        alt={event.nom}
+                                        alt={event.name}
                                         loading="lazy"
                                     />
                                     <ImageListItemBar
-                                        title={event.nom}
+                                        title={event.name}
                                         actionIcon={
                                             <IconButton
                                                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                                aria-label={`info about ${event.nom}`}
+                                                aria-label={`info about ${event.name}`}
                                             />
                                         }
                                     />

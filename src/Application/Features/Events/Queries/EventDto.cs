@@ -9,8 +9,8 @@ public class EventDto : IMapFrom<Event>
 
     public int Id { get; set; }
 
-    public string Nom { get; set; } = "";
+    public string Name { get; set; } = String.Empty;
 
     public DateTime Date { get; set; }
-    public string url { get; set; } = "";
+    public string url { get; set; } = String.Empty;
 }

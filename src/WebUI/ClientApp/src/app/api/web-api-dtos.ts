@@ -43,7 +43,7 @@ export interface RegisterDto {
 
 export interface EventDto {
     id: number;
-    nom: string;
+    name: string;
     date: Date;
     url: string;
 }

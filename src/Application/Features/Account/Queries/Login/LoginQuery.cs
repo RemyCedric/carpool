@@ -2,8 +2,8 @@ namespace Carpool.Application.Features.Account.Queries.Login;
 
 public class LoginQuery : IRequest<ApplicationUser>
 {
-    public string Email { get; set; } = "";
-    public string Password { get; set; } = "";
+    public string Email { get; set; } = String.Empty;
+    public string Password { get; set; } = String.Empty;
 }
 
 public class LoginQueryHandler : IRequestHandler<LoginQuery, ApplicationUser>

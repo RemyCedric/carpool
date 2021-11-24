@@ -2,7 +2,7 @@ namespace Carpool.Application.Features.Events.Commands.CreateEvent;
 
 public class CreateEventCommand : IRequest<int>
 {
-    public String Nom { get; set; } = String.Empty;
+    public String Name { get; set; } = String.Empty;
     public DateTime Date { get; set; }
     public IFormFile? File { get; set; }
 
@@ -27,7 +27,7 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, int
 
         var entity = new Event
         {
-            Nom = request.Nom,
+            Name = request.Name,
             Date = request.Date,
             Photo = new Photo
             {

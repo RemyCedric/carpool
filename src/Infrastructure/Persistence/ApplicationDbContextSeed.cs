@@ -42,7 +42,7 @@ public static class ApplicationDbContextSeed
         {
             var events = new List<Event>{
                 new Event{
-                Nom="Christmas Party",
+                Name="Christmas Party",
                 Date = new DateTime(2021,12,09,18,00,00),
                 Photo= new Photo{
                     Id="kr4bl7jjsgomqgvctyiz",
@@ -50,7 +50,7 @@ public static class ApplicationDbContextSeed
                     }
                 },
                 new Event{
-                Nom="Poker",
+                Name="Poker",
                 Date = new DateTime(2021,12,09,18,00,00),
                 Photo= new Photo{
                     Id="rqxy0dorqjsgeoxiixos",
@@ -58,7 +58,7 @@ public static class ApplicationDbContextSeed
                     }
                 },
                 new Event{
-                Nom="Party",
+                Name="Party",
                 Date = new DateTime(2021,12,09,18,00,00),
                 Photo= new Photo{
                     Id="aafyl3bybgheacc8nuan	",
@@ -66,7 +66,7 @@ public static class ApplicationDbContextSeed
                     }
                 },
                 new Event{
-                Nom="Easter Egg Party",
+                Name="Easter Egg Party",
                 Date = new DateTime(2021,12,09,18,00,00),
                 Photo= new Photo{
                     Id="rznc2xcxezem1jf902sq",

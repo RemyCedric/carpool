@@ -173,7 +173,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "Nom": {
+                  "Name": {
                     "type": "string",
                     "nullable": true
                   },
@@ -348,7 +348,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "nom": {
+          "name": {
             "type": "string"
           },
           "date": {

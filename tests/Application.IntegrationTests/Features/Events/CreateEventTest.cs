@@ -22,7 +22,7 @@ public class CreateEventTest : TestBase
 
         var command = new CreateEventCommand
         {
-            Nom = "New event",
+            Name = "New event",
             Date = new DateTime()
         };
 
