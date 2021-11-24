@@ -21,9 +21,10 @@ The easiest way to get started is to install the [NuGet package](https://www.nug
 2. Install the latest [Node.js LTS](https://nodejs.org/en/)
 3. Run `git clone https://github.com/RemyCedric/carpool.git` to pull the project
 4. Add your cloudinary configuration in your `src/WebUI/appsettings.json` file, should be created
-5. Navigate to `src/WebUI/ClientApp` and run `npm install`
-6. Navigate to `src/WebUI/ClientApp` and run `npm start` to launch the front end (React)
-7. Navigate to `src/WebUI` and run `dotnet run` to launch the back end (ASP.NET Core Web API)
+5. Add your sendGrid configuration in your `src/WebUI/appsettings.json` file, should be created
+6. Navigate to `src/WebUI/ClientApp` and run `npm install`
+7. Navigate to `src/WebUI/ClientApp` and run `npm start` to launch the front end (React)
+8. Navigate to `src/WebUI` and run `dotnet run` to launch the back end (ASP.NET Core Web API)
 
 ### Docker Configuration
 
@@ -65,6 +66,8 @@ You need some `Config Vars`
 * `Cloudinary:ApiKey` filled with your Cloudinary configuration
 * `Cloudinary:ApiSecret` filled with your Cloudinary configuration
 * `Cloudinary:CloudName` filled with your Cloudinary configuration
+* `Sendgrid:User` filled with your Sendgrid configuration
+* `Sendgrid:Password` filled with your Sendgrid configuration
 
 ### Database Configuration
 
