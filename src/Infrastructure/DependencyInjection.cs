@@ -66,6 +66,7 @@ public static class DependencyInjection
         services.AddScoped<IPhotoAccessor, PhotoAccessor>();
         services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
 
+            services.AddScoped<IEmailSender, EmailSender>();
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();

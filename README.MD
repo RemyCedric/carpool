@@ -1,6 +1,6 @@
 # Car Pooling Application
 
-[Application hosted on Heroku](https://covoiturageptc.herokuapp.com/)
+[Application hosted on Heroku](https://carpoolptc.herokuapp.com/)
 
 ## Technologies
 

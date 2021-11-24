@@ -1,6 +1,7 @@
 global using Carpool.Application.Common.Models;
 global using Carpool.Application.Common.Interfaces;
 global using Carpool.Domain.Entities;
+global using Carpool.Infrastructure.Email;
 global using Carpool.Infrastructure.Identity;
 global using Carpool.Infrastructure.Persistence;
 global using Carpool.Infrastructure.Photos;
@@ -14,6 +15,7 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 global using Microsoft.Extensions.Configuration;
+global using SendGrid;
+global using SendGrid.Helpers.Mail;
 global using System.Reflection;
 global using System.Threading.Tasks;
-
