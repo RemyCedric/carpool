@@ -24,6 +24,9 @@ public class AccountController : ApiControllerBase
 
         if (string.IsNullOrEmpty(userLogged.UserName)) return BadRequest("Invalid email or password");
 
+        if (!userLogged.EmailConfirmed) return Unauthorized("Email not confirmed");
+
+
         return Ok(CreateUserObject(userLogged));
     }
 

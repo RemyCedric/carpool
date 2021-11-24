@@ -10,7 +10,7 @@ public static class DependencyInjection
                     opt.Password.RequireLowercase = true;
                     opt.Password.RequireUppercase = true;
                     opt.Password.RequireDigit = true;
-                    opt.SignIn.RequireConfirmedEmail = false;
+                    opt.SignIn.RequireConfirmedEmail = true;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddSignInManager<SignInManager<ApplicationUser>>()
@@ -66,7 +66,7 @@ public static class DependencyInjection
         services.AddScoped<IPhotoAccessor, PhotoAccessor>();
         services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
 
-            services.AddScoped<IEmailSender, EmailSender>();
+        services.AddScoped<IEmailSender, EmailSender>();
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();

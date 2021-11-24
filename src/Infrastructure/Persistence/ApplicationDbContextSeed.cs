@@ -18,12 +18,14 @@ public static class ApplicationDbContextSeed
                     new ApplicationUser
                     {
                         UserName = "bob",
-                        Email = "bob@test.com"
+                        Email = "bob@test.com",
+                        EmailConfirmed = true,
                     },
                     new ApplicationUser
                     {
                         UserName = "tom",
-                        Email = "tom@test.com"
+                        Email = "tom@test.com",
+                        EmailConfirmed = true,
                     },
                 };
 
