@@ -86,7 +86,6 @@ export const accountSlice = createSlice({
         });
         builder.addCase(fetchCurrentUser.rejected, (state, { error }) => {
             if (!({}.hasOwnProperty.call(error, 'name') && error.name === 'ConditionError')) {
-                console.log(error);
                 toast.error('Session expired - please login again');
             }
             state.user = null;

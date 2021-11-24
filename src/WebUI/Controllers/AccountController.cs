@@ -1,16 +1,22 @@
 using Carpool.Application.Features.Account.Commands.Register;
 using Carpool.Application.Features.Account.Queries.CurrentUser;
 using Carpool.Application.Features.Account.Queries.Login;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Carpool.WebUI.Controllers;
 
 [Authorize]
 public class AccountController : ApiControllerBase
 {
+
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly TokenService _tokenService;
-    public AccountController(TokenService tokenService)
+    private readonly IEmailSender _emailSender;
+    public AccountController(UserManager<ApplicationUser> userManager, TokenService tokenService, IEmailSender emailSender)
     {
+        _userManager = userManager;
         _tokenService = tokenService;
+        _emailSender = emailSender;
     }
 
 
@@ -31,10 +37,10 @@ public class AccountController : ApiControllerBase
     }
 
     [AllowAnonymous]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpPost("register")]
-    public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+    public async Task<ActionResult<string>> Register(RegisterDto registerDto)
     {
         var userRegistered = await Mediator.Send(new RegisterCommand
         {
@@ -45,7 +51,62 @@ public class AccountController : ApiControllerBase
 
         if (userRegistered is null) return BadRequest("Problem registering user");
 
-        return Ok(CreateUserObject(userRegistered));
+
+
+        var origin = Request.Headers["origin"];
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(userRegistered);
+        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+        var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={userRegistered.Email}";
+        var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify Email</a></p>";
+
+        await _emailSender.SendEmailAsync(userRegistered.Email, "Please verify email", message);
+
+        return Ok("Registration success - please verify email");
+    }
+
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
+    [HttpPost("verifyEmail")]
+    public async Task<IActionResult> VerifyEmail(string token, string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        if (user is null) return Unauthorized();
+
+        var decodeTokenBytes = WebEncoders.Base64UrlDecode(token);
+        var decodeToken = Encoding.UTF8.GetString(decodeTokenBytes);
+        var result = await _userManager.ConfirmEmailAsync(user, decodeToken);
+
+        if (!result.Succeeded) return BadRequest("Could not verify email address");
+
+        return Ok("Email confirmed you can now login");
+    }
+
+
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
+    [HttpGet("resendEmailConfirmationLink")]
+    public async Task<IActionResult> resendEmailConfirmationLink(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        if (user is null) return Unauthorized();
+
+        var origin = Request.Headers["origin"];
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+        var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
+        var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify Email</a></p>";
+
+        await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
+
+        return Ok("Verification email resend - please verify email");
     }
 
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
