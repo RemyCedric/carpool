@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Covoiturage.Infrastructure.Identity;
+namespace Carpool.Infrastructure.Identity;
 
 public class IdentityService : IIdentityService
 {

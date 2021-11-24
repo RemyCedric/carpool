@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.Infrastructure;
+﻿namespace Carpool.Infrastructure;
 
 public static class DependencyInjection
 {
@@ -20,7 +20,7 @@ public static class DependencyInjection
         if (configuration.GetValue<bool>("UseInMemoryDatabase"))
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase("covoiturage"));
+                options.UseInMemoryDatabase("Carpool"));
         }
         else
         {

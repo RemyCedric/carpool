@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.Domain.Common;
+﻿namespace Carpool.Domain.Common;
 
 public interface IHasDomainEvent
 {

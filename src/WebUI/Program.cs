@@ -1,4 +1,4 @@
-namespace Covoiturage.WebUI;
+namespace Carpool.WebUI;
 
 public class Program
 {

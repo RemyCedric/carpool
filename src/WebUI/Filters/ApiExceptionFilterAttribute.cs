@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.WebUI.Filters;
+﻿namespace Carpool.WebUI.Filters;
 
 public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 {

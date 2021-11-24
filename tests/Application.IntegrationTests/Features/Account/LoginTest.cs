@@ -1,7 +1,7 @@
-﻿using Covoiturage.Application.Features.Account.Commands.Register;
-using Covoiturage.Application.Features.Account.Queries.Login;
+﻿using Carpool.Application.Features.Account.Commands.Register;
+using Carpool.Application.Features.Account.Queries.Login;
 
-namespace Covoiturage.Application.IntegrationTests.Features.Account;
+namespace Carpool.Application.IntegrationTests.Features.Account;
 
 using static Testing;
 
@@ -49,7 +49,7 @@ public class LoginTest : TestBase
         var query = new LoginQuery
         {
             Email = "test@test.com",
-            Password =  "Pa$$word13"
+            Password = "Pa$$word13"
         };
 
         var user = await SendAsync(query);

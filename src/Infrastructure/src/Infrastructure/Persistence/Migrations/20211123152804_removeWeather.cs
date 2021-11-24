@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Covoiturage.Infrastructure.src.Infrastructure.Persistence.Migrations
+namespace Carpool.Infrastructure.src.Infrastructure.Persistence.Migrations
 {
     public partial class removeWeather : Migration
     {

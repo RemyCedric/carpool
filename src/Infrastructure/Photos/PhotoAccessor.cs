@@ -1,4 +1,4 @@
-namespace Covoiturage.Infrastructure.Photos;
+namespace Carpool.Infrastructure.Photos;
 public class PhotoAccessor : IPhotoAccessor
 {
     private readonly Cloudinary _cloudinary;

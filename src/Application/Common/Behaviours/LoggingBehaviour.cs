@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.Application.Common.Behaviours;
+﻿namespace Carpool.Application.Common.Behaviours;
 
 public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where TRequest : notnull
 {

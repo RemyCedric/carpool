@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.Infrastructure.Persistence;
+﻿namespace Carpool.Infrastructure.Persistence;
 
 public static class ApplicationDbContextSeed
 {

@@ -1,4 +1,4 @@
-namespace Covoiturage.Domain.Entities;
+namespace Carpool.Domain.Entities;
 public class Photo
 {
     public string Id { get; set; } = "";

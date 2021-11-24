@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.Application.IntegrationTests;
+﻿namespace Carpool.Application.IntegrationTests;
 
 [SetUpFixture]
 public class Testing
@@ -23,7 +23,7 @@ public class Testing
 
         services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
             w.EnvironmentName == "Development" &&
-            w.ApplicationName == "Covoiturage.WebUI"));
+            w.ApplicationName == "Carpool.WebUI"));
 
         services.AddLogging();
 

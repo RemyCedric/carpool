@@ -1,6 +1,6 @@
-﻿using ValidationException = Covoiturage.Application.Common.Exceptions.ValidationException;
+﻿using ValidationException = Carpool.Application.Common.Exceptions.ValidationException;
 
-namespace Covoiturage.Application.Common.Behaviours;
+namespace Carpool.Application.Common.Behaviours;
 
 public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
      where TRequest : notnull

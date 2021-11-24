@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.Infrastructure.Identity;
+﻿namespace Carpool.Infrastructure.Identity;
 
 public static class IdentityResultExtensions
 {

@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.WebUI.Controllers;
+﻿namespace Carpool.WebUI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

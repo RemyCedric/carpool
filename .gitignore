@@ -234,7 +234,7 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 /NDependOut
-/covoiturage.ndproj
+/Carpool.ndproj
 /.mfractor
 
 .vscode

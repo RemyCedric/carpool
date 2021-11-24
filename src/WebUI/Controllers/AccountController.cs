@@ -1,8 +1,8 @@
-using Covoiturage.Application.Features.Account.Commands.Register;
-using Covoiturage.Application.Features.Account.Queries.CurrentUser;
-using Covoiturage.Application.Features.Account.Queries.Login;
+using Carpool.Application.Features.Account.Commands.Register;
+using Carpool.Application.Features.Account.Queries.CurrentUser;
+using Carpool.Application.Features.Account.Queries.Login;
 
-namespace Covoiturage.WebUI.Controllers;
+namespace Carpool.WebUI.Controllers;
 
 [Authorize]
 public class AccountController : ApiControllerBase

@@ -1,5 +1,5 @@
 ﻿
-namespace Covoiturage.Domain.Entities;
+namespace Carpool.Domain.Entities;
 
 public class ApplicationUser : IdentityUser
 {

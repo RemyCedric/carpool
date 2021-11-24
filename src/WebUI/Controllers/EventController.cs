@@ -1,9 +1,9 @@
 
-using Covoiturage.Application.Features.Events.Commands.CreateEvent;
-using Covoiturage.Application.Features.Events.Queries;
-using Covoiturage.Application.Features.Events.Queries.GetEvents;
+using Carpool.Application.Features.Events.Commands.CreateEvent;
+using Carpool.Application.Features.Events.Queries;
+using Carpool.Application.Features.Events.Queries.GetEvents;
 
-namespace Covoiturage.WebUI.Controllers;
+namespace Carpool.WebUI.Controllers;
 
 [Authorize]
 public class EventController : ApiControllerBase

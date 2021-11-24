@@ -1,7 +1,7 @@
-global using Covoiturage.Application.Common.Interfaces;
-global using Covoiturage.Application.Common.Mappings;
-global using Covoiturage.Application.Common.Models;
-global using Covoiturage.Domain.Entities;
+global using Carpool.Application.Common.Interfaces;
+global using Carpool.Application.Common.Mappings;
+global using Carpool.Application.Common.Models;
+global using Carpool.Domain.Entities;
 global using AutoMapper;
 global using AutoMapper.QueryableExtensions;
 global using FluentValidation;

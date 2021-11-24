@@ -1,10 +1,10 @@
-global using Covoiturage.Application.Common.Models;
-global using Covoiturage.Application.Common.Interfaces;
-global using Covoiturage.Domain.Entities;
-global using Covoiturage.Infrastructure.Identity;
-global using Covoiturage.Infrastructure.Persistence;
-global using Covoiturage.Infrastructure.Photos;
-global using Covoiturage.Infrastructure.Services;
+global using Carpool.Application.Common.Models;
+global using Carpool.Application.Common.Interfaces;
+global using Carpool.Domain.Entities;
+global using Carpool.Infrastructure.Identity;
+global using Carpool.Infrastructure.Persistence;
+global using Carpool.Infrastructure.Photos;
+global using Carpool.Infrastructure.Services;
 global using CloudinaryDotNet;
 global using CloudinaryDotNet.Actions;
 global using Microsoft.AspNetCore.Http;

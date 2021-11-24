@@ -1,4 +1,4 @@
-namespace Covoiturage.Application.Features.Events.Queries.GetEvents;
+namespace Carpool.Application.Features.Events.Queries.GetEvents;
 
 public class GetEventsQuery : IRequest<IEnumerable<EventDto>>
 {

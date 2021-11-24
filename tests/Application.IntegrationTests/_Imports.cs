@@ -1,9 +1,9 @@
-global using Covoiturage.Application.Common.Exceptions;
-global using Covoiturage.Application.Common.Interfaces;
-global using Covoiturage.Domain.Entities;
-global using Covoiturage.Infrastructure.Identity;
-global using Covoiturage.Infrastructure.Persistence;
-global using Covoiturage.WebUI.Extensions;
+global using Carpool.Application.Common.Exceptions;
+global using Carpool.Application.Common.Interfaces;
+global using Carpool.Domain.Entities;
+global using Carpool.Infrastructure.Identity;
+global using Carpool.Infrastructure.Persistence;
+global using Carpool.WebUI.Extensions;
 global using FluentAssertions;
 global using MediatR;
 global using Microsoft.AspNetCore.Hosting;

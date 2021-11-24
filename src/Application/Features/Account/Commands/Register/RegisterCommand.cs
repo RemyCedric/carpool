@@ -1,5 +1,5 @@
 
-namespace Covoiturage.Application.Features.Account.Commands.Register;
+namespace Carpool.Application.Features.Account.Commands.Register;
 
 public class RegisterCommand : IRequest<ApplicationUser>
 {

@@ -1,4 +1,4 @@
-namespace Covoiturage.WebUI.Dtos
+namespace Carpool.WebUI.Dtos
 {
     public class LoginDto
     {

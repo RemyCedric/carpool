@@ -1,10 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Covoiturage.Domain.Entities;
+using Carpool.Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Covoiturage.WebUI.Services;
+namespace Carpool.WebUI.Services;
 
 public class TokenService
 {

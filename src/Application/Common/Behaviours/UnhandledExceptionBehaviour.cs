@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.Application.Common.Behaviours;
+﻿namespace Carpool.Application.Common.Behaviours;
 
 public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
@@ -19,7 +19,7 @@ public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavio
         {
             var requestName = typeof(TRequest).Name;
 
-            _logger.LogError(ex, "Covoiturage Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
+            _logger.LogError(ex, "Carpool Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
 
             throw;
         }

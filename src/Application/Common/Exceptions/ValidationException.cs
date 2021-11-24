@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.Application.Common.Exceptions;
+﻿namespace Carpool.Application.Common.Exceptions;
 
 public class ValidationException : Exception
 {

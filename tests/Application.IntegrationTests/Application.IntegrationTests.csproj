@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <RootNamespace>Covoiturage.Application.IntegrationTests</RootNamespace>
-        <AssemblyName>Covoiturage.Application.IntegrationTests</AssemblyName>
+        <RootNamespace>Carpool.Application.IntegrationTests</RootNamespace>
+        <AssemblyName>Carpool.Application.IntegrationTests</AssemblyName>
 
         <IsPackable>false</IsPackable>
         <ImplicitUsings>enable</ImplicitUsings>

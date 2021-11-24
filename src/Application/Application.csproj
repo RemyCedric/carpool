@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <RootNamespace>Covoiturage.Application</RootNamespace>
-        <AssemblyName>Covoiturage.Application</AssemblyName>
+        <RootNamespace>Carpool.Application</RootNamespace>
+        <AssemblyName>Carpool.Application</AssemblyName>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>

@@ -1,6 +1,6 @@
-﻿using Covoiturage.Application.Common.Behaviours;
+﻿using Carpool.Application.Common.Behaviours;
 
-namespace Covoiturage.Application;
+namespace Carpool.Application;
 
 public static class DependencyInjection
 {

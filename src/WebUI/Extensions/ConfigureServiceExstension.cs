@@ -1,4 +1,4 @@
-namespace Covoiturage.WebUI.Extensions;
+namespace Carpool.WebUI.Extensions;
 
 public static class ConfigureServiceExtension
 {

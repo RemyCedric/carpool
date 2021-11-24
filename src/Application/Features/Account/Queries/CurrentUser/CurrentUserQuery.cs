@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Covoiturage.Application.Features.Account.Queries.CurrentUser
+namespace Carpool.Application.Features.Account.Queries.CurrentUser
 {
     public class CurrentUserQuery : IRequest<ApplicationUser>
     {
@@ -26,7 +26,7 @@ namespace Covoiturage.Application.Features.Account.Queries.CurrentUser
 
             if (email is null) return null!;
 
-                return await _identityService.GetCurrentUserByEmailAsync(email);
+            return await _identityService.GetCurrentUserByEmailAsync(email);
         }
     }
 }

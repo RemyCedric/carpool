@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.Application.IntegrationTests;
+﻿namespace Carpool.Application.IntegrationTests;
 
 using static Testing;
 

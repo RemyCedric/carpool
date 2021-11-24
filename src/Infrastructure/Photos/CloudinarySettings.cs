@@ -1,4 +1,4 @@
-namespace Covoiturage.Infrastructure.Photos;
+namespace Carpool.Infrastructure.Photos;
 public class CloudinarySettings
 {
     public string CloudName { get; set; } = "";

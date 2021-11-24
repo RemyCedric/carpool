@@ -44,7 +44,7 @@ export default function Header(): React.ReactElement {
                         underline="none"
                         sx={{ flexGrow: 1 }}
                     >
-                        Covoiturage
+                        Carpool
                     </Link>
                     <div>
                         <IconButton

@@ -1,6 +1,6 @@
-﻿using Covoiturage.Application.Features.Events.Commands.CreateEvent;
+﻿using Carpool.Application.Features.Events.Commands.CreateEvent;
 
-namespace Covoiturage.Application.IntegrationTests.Features.Events;
+namespace Carpool.Application.IntegrationTests.Features.Events;
 
 using static Testing;
 
@@ -27,10 +27,10 @@ public class CreateEventTest : TestBase
         };
 
         var eventId = 1;
-//        var eventId = await SendAsync(command);
+        //        var eventId = await SendAsync(command);
 
 
-        var ev= await FindAsync<Event>(eventId);
+        var ev = await FindAsync<Event>(eventId);
 
     }
 }

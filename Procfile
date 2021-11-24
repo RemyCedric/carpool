@@ -1,1 +1,1 @@
-web: cd /app/heroku_output && ./Covoiturage.WebUI
+web: cd /app/heroku_output && ./Carpool.WebUI

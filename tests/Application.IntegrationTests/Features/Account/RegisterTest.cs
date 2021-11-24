@@ -1,6 +1,6 @@
-﻿using Covoiturage.Application.Features.Account.Commands.Register;
+﻿using Carpool.Application.Features.Account.Commands.Register;
 
-namespace Covoiturage.Application.IntegrationTests.Features.Account;
+namespace Carpool.Application.IntegrationTests.Features.Account;
 
 using static Testing;
 
@@ -89,7 +89,7 @@ public class RegisterTest : TestBase
 
         await FluentActions.Invoking(() =>
             SendAsync(command)).Should().ThrowAsync<ValidationException>();
-        
+
         command.Password = "Pa$$word13";
 
         var user = await SendAsync(command);

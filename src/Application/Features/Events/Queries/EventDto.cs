@@ -1,4 +1,4 @@
-namespace Covoiturage.Application.Features.Events.Queries;
+namespace Carpool.Application.Features.Events.Queries;
 public class EventDto : IMapFrom<Event>
 {
     public void Mapping(Profile profile)

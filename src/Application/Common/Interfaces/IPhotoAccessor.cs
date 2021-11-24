@@ -1,6 +1,6 @@
 
 
-namespace Covoiturage.Application.Common.Interfaces;
+namespace Carpool.Application.Common.Interfaces;
 public interface IPhotoAccessor
 {
     Task<PhotoUploadResult> AddPhoto(IFormFile file);

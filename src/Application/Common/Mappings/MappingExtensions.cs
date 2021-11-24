@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.Application.Common.Mappings;
+﻿namespace Carpool.Application.Common.Mappings;
 
 public static class MappingExtensions
 {

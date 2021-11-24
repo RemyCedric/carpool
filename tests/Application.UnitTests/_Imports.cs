@@ -1,6 +1,6 @@
-global using Covoiturage.Application.Common.Exceptions;
-global using Covoiturage.Application.Common.Mappings;
-global using Covoiturage.Domain.Entities;
+global using Carpool.Application.Common.Exceptions;
+global using Carpool.Application.Common.Mappings;
+global using Carpool.Domain.Entities;
 global using AutoMapper;
 global using FluentAssertions;
 global using FluentValidation.Results;

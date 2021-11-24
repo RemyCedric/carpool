@@ -1,5 +1,5 @@
 ﻿
-namespace Covoiturage.Application.UnitTests.Common.Exceptions;
+namespace Carpool.Application.UnitTests.Common.Exceptions;
 
 public class ValidationExceptionTests
 {

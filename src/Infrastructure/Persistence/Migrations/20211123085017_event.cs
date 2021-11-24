@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Covoiturage.Infrastructure.Persistence.Migrations
+namespace Carpool.Infrastructure.Persistence.Migrations
 {
     public partial class @event : Migration
     {

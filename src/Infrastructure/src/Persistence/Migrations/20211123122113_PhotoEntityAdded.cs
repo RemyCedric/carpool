@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Covoiturage.Infrastructure.src.Persistence.Migrations
+namespace Carpool.Infrastructure.src.Persistence.Migrations
 {
     public partial class PhotoEntityAdded : Migration
     {

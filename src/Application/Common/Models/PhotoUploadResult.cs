@@ -1,4 +1,4 @@
-namespace Covoiturage.Application.Common.Models;
+namespace Carpool.Application.Common.Models;
 
 public class PhotoUploadResult
 {

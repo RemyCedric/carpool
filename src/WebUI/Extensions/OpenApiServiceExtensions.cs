@@ -1,4 +1,4 @@
-namespace Covoiturage.WebUI.Extensions;
+namespace Carpool.WebUI.Extensions;
 
 public static class OpenApiServiceExtensions
 {
@@ -6,7 +6,7 @@ public static class OpenApiServiceExtensions
     {
         services.AddOpenApiDocument(configure =>
        {
-           configure.Title = "Covoiturage API";
+           configure.Title = "Carpool API";
            configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
            {
                Type = OpenApiSecuritySchemeType.ApiKey,

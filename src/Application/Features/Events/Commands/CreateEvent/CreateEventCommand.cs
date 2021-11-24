@@ -1,4 +1,4 @@
-namespace Covoiturage.Application.Features.Events.Commands.CreateEvent;
+namespace Carpool.Application.Features.Events.Commands.CreateEvent;
 
 public class CreateEventCommand : IRequest<int>
 {

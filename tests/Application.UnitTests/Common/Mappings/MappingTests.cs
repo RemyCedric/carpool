@@ -1,4 +1,4 @@
-﻿namespace Covoiturage.Application.UnitTests.Common.Mappings;
+﻿namespace Carpool.Application.UnitTests.Common.Mappings;
 
 public class MappingTests
 {

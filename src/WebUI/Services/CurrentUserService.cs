@@ -1,4 +1,4 @@
-namespace Covoiturage.WebUI.Services;
+namespace Carpool.WebUI.Services;
 
 public class CurrentUserService : ICurrentUserService
 {

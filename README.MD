@@ -1,6 +1,6 @@
 # Car Pooling Application
 
-[Application hosted on Heroku](https://covoiturageptc.herokuapp.com/)
+[Application hosted on Heroku](https://Carpoolptc.herokuapp.com/)
 
 ## Technologies
 
@@ -19,7 +19,7 @@ The easiest way to get started is to install the [NuGet package](https://www.nug
 
 1. Install the latest [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
 2. Install the latest [Node.js LTS](https://nodejs.org/en/)
-3. Run `git clone https://github.com/RemyCedric/covoiturage.git` to pull the project
+3. Run `git clone https://github.com/RemyCedric/Carpool.git` to pull the project
 4. Add your cloudinary configuration in your `src/WebUI/appsettings.json` file, should be created
 5. Navigate to `src/WebUI/ClientApp` and run `npm install`
 6. Navigate to `src/WebUI/ClientApp` and run `npm start` to launch the front end (React)
@@ -112,4 +112,4 @@ This layer is a single page application based on React 17 and ASP.NET Core 6. Th
 
 ## Support
 
-If you are having problems, please let me know by [raising a new issue](https://github.com/RemyCedric/covoiturage/issues/new/choose).
+If you are having problems, please let me know by [raising a new issue](https://github.com/RemyCedric/Carpool/issues/new/choose).

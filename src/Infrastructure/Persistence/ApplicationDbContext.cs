@@ -1,8 +1,8 @@
-﻿using Covoiturage.Application.Common.Interfaces;
-using Covoiturage.Domain.Common;
-using Covoiturage.Domain.Entities;
+﻿using Carpool.Application.Common.Interfaces;
+using Carpool.Domain.Common;
+using Carpool.Domain.Entities;
 
-namespace Covoiturage.Infrastructure.Persistence;
+namespace Carpool.Infrastructure.Persistence;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
 {

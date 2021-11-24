@@ -32,7 +32,7 @@
       "serviceHost": null,
       "serviceBasePath": null,
       "serviceSchemes": [],
-      "infoTitle": "Covoiturage API",
+      "infoTitle": "Carpool API",
       "infoDescription": null,
       "infoVersion": "1.0.0",
       "documentTemplate": null,
