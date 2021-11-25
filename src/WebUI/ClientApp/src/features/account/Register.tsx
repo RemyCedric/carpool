@@ -14,7 +14,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { toast } from 'react-toastify';
 import Copyright from './Copyright';
 import { useAppDispatch } from '../../app/store';
 import { registerUser } from './AccountSlice';
@@ -56,9 +55,8 @@ export default function SignUp(): React.ReactElement {
         await dispatch(registerUser(registerDto as RegisterDto)).then(({ payload }: any) => {
             if ({}.hasOwnProperty.call(payload, 'error') && {}.hasOwnProperty.call(payload.error, 'errors')) {
                 handleApiErrors(payload.error.errors);
-            } else if ({}.hasOwnProperty.call(payload, 'token')) {
-                toast.success('Registration successful - you can now login');
-                navigate('/login', { state: { from: location.pathname } });
+            } else {
+                navigate(`/registerSuccess?email=${registerDto.email}`, { state: { from: location.pathname } });
             }
         });
     }
@@ -104,10 +102,10 @@ export default function SignUp(): React.ReactElement {
                                 label="Email Address"
                                 {...register('email', {
                                     required: 'email required',
-                                    pattern: {
-                                        value: /^[A-Za-z0-9._%+-]+@test.com$/,
-                                        message: `The email isn't valid, please enter an 'positivethinking.lu' email`,
-                                    },
+                                    //     pattern: {
+                                    //         value: /^[A-Za-z0-9._%+-]+@test.com$/,
+                                    //         message: `The email isn't valid, please enter an 'positivethinking.lu' email`,
+                                    //     },
                                 })}
                                 error={!!errors.email}
                                 helperText={errors.email?.message}

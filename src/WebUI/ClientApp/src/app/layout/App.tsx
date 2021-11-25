@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { fetchCurrentUser } from '../../features/account/AccountSlice';
 import Login from '../../features/account/Login';
 import Register from '../../features/account/Register';
+import RegisterSuccess from '../../features/account/RegisterSuccess';
 import { useAppDispatch, useAppSelector } from '../store';
 import Main from './main/Main';
 import RequireAuth from './RequireAuth';
@@ -46,6 +47,10 @@ function App(): React.ReactElement {
                         />
                         <Route path="/login" element={user ? <Navigate replace to="/events" /> : <Login />} />
                         <Route path="/register" element={user ? <Navigate replace to="/events" /> : <Register />} />
+                        <Route
+                            path="/registerSuccess"
+                            element={user ? <Navigate replace to="/events" /> : <RegisterSuccess />}
+                        />
                     </Routes>
                 )}
             </Container>

@@ -50,6 +50,10 @@ const Account = {
     login: (loginDto: LoginDto): Promise<UserDto> => requests.post<UserDto>('account/login', loginDto),
     register: (registerDto: RegisterDto): Promise<UserDto> => requests.post<UserDto>('account/register', registerDto),
     currentUser: (): Promise<UserDto> => requests.get<UserDto>('account'),
+    verifyEmail: (token: string, email: string): Promise<void> =>
+        requests.post<void>(`account/verifyEmail?token=${token}&email=${email}`, {}),
+    resendEmailConfirmation: (email: string): Promise<void> =>
+        requests.get<void>(`account/resendEmailConfirmationLink?email=${email}`),
 };
 
 const Event = {

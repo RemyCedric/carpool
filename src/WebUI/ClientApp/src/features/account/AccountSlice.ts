@@ -31,9 +31,7 @@ export const registerUser = createAsyncThunk<UserDto, RegisterDto>(
     'account/registerUser',
     async (registerDto, thunkAPI: any) => {
         try {
-            const user = await agent.Account.register(registerDto);
-            localStorage.setItem('user', JSON.stringify(user));
-            return user;
+            return await agent.Account.register(registerDto);
         } catch (error: any) {
             return thunkAPI.rejectWithValue({ error: error.data });
         }
@@ -95,7 +93,7 @@ export const accountSlice = createSlice({
         builder.addCase(signInUser.rejected, () => {
             localStorage.removeItem('user');
         });
-        builder.addMatcher(isAnyOf(signInUser.fulfilled, registerUser.fulfilled), (state, action) => {
+        builder.addMatcher(isAnyOf(signInUser.fulfilled), (state, action) => {
             state.user = action.payload;
         });
     },
