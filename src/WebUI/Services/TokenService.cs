@@ -1,9 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Carpool.Domain.Entities;
-using Microsoft.IdentityModel.Tokens;
-
 namespace Carpool.WebUI.Services;
 
 public class TokenService
@@ -37,5 +31,16 @@ public class TokenService
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
         return tokenHandler.WriteToken(token);
+    }
+
+    public string DecodeToken(string token)
+    {
+        var decodeTokenBytes = WebEncoders.Base64UrlDecode(token);
+        return Encoding.UTF8.GetString(decodeTokenBytes);
+    }
+
+    public string EncodeToken(string token)
+    {
+        return WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
     }
 }

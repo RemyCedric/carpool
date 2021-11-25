@@ -13,11 +13,11 @@
         ],
         "operationId": "Account_Login",
         "requestBody": {
-          "x-name": "loginDto",
+          "x-name": "query",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginDto"
+                "$ref": "#/components/schemas/LoginQuery"
               }
             }
           },
@@ -44,6 +44,16 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -55,11 +65,11 @@
         ],
         "operationId": "Account_Register",
         "requestBody": {
-          "x-name": "registerDto",
+          "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegisterDto"
+                "$ref": "#/components/schemas/RegisterCommand"
               }
             }
           },
@@ -98,7 +108,7 @@
         "operationId": "Account_VerifyEmail",
         "parameters": [
           {
-            "name": "token",
+            "name": "Email",
             "in": "query",
             "schema": {
               "type": "string",
@@ -107,7 +117,7 @@
             "x-position": 1
           },
           {
-            "name": "email",
+            "name": "Token",
             "in": "query",
             "schema": {
               "type": "string",
@@ -118,31 +128,14 @@
         ],
         "responses": {
           "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": ""
           },
           "400": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
                 }
               }
             }
@@ -183,17 +176,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
                 }
               }
             }
@@ -234,17 +217,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
                 }
               }
             }
@@ -258,45 +231,21 @@
           "Account"
         ],
         "operationId": "Account_ResetPassword",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 1
-          },
-          {
-            "name": "token",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 2
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 3
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordCommand"
               }
             }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
           },
           "400": {
             "description": "",
@@ -304,16 +253,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ValidationProblemDetails"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -544,7 +483,7 @@
           }
         }
       },
-      "LoginDto": {
+      "LoginQuery": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -556,14 +495,29 @@
           }
         }
       },
-      "RegisterDto": {
+      "RegisterCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "username": {
+          "email": {
             "type": "string"
           },
+          "password": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        }
+      },
+      "ResetPasswordCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
           "email": {
+            "type": "string"
+          },
+          "token": {
             "type": "string"
           },
           "password": {

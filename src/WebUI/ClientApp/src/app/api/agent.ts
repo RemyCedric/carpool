@@ -2,7 +2,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { store } from '../store';
-import { LoginDto, RegisterDto, UserDto } from './web-api-dtos';
+import { LoginQuery, RegisterCommand, UserDto } from './web-api-dtos';
 //  import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
@@ -47,8 +47,9 @@ const requests = {
 };
 
 const Account = {
-    login: (loginDto: LoginDto): Promise<UserDto> => requests.post<UserDto>('account/login', loginDto),
-    register: (registerDto: RegisterDto): Promise<UserDto> => requests.post<UserDto>('account/register', registerDto),
+    login: (loginDto: LoginQuery): Promise<UserDto> => requests.post<UserDto>('account/login', loginDto),
+    register: (registerDto: RegisterCommand): Promise<UserDto> =>
+        requests.post<UserDto>('account/register', registerDto),
     currentUser: (): Promise<UserDto> => requests.get<UserDto>('account'),
     verifyEmail: (token: string, email: string): Promise<void> =>
         requests.post<void>(`account/verifyEmail?token=${token}&email=${email}`, {}),

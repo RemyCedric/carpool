@@ -92,11 +92,9 @@ public class RegisterTest : TestBase
 
         command.Password = "Pa$$word13";
 
-        var user = await SendAsync(command);
+        var token = await SendAsync(command);
 
-        user!.UserName.Should().Be("Username");
-        user!.Email.Should().Be("test@test.com");
-
+        token.Should().NotBeNullOrEmpty();
     }
 
 
@@ -110,11 +108,9 @@ public class RegisterTest : TestBase
             Email = "test@test.com"
         };
 
-        var user = await SendAsync(command);
+        var token = await SendAsync(command);
 
-        user!.UserName.Should().Be("Username");
-        user!.Email.Should().Be("test@test.com");
-
+        token.Should().NotBeNullOrEmpty();
     }
 
 }
