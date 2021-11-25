@@ -134,6 +134,7 @@ public class AccountController : ApiControllerBase
         token = _tokenService.EncodeToken(token);
 
         var verifyUrl = $"{origin}/verifyEmail?token={token}&email={email}";
+
         var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify Email</a></p><p>The link will be alive two hours</p>";
 
         await _emailSender.SendEmailAsync(email, "Please verify email", message);
