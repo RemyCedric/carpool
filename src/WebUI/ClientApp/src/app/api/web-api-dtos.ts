@@ -30,14 +30,20 @@ export interface ValidationProblemDetails extends HttpValidationProblemDetails {
     errors: { [key: string]: string[]; };
 }
 
-export interface LoginDto {
+export interface LoginQuery {
     email: string;
     password: string;
 }
 
-export interface RegisterDto {
-    username: string;
+export interface RegisterCommand {
     email: string;
+    password: string;
+    username: string;
+}
+
+export interface ResetPasswordCommand {
+    email: string;
+    token: string;
     password: string;
 }
 

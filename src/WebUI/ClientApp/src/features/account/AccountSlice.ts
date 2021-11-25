@@ -5,7 +5,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import agent from '../../app/api/agent';
-import { LoginDto, RegisterDto, UserDto } from '../../app/api/web-api-dtos';
+import { LoginQuery, RegisterCommand, UserDto } from '../../app/api/web-api-dtos';
 
 interface AccountState {
     user: UserDto | null;
@@ -17,17 +17,20 @@ const initialState: AccountState = {
     loading: true,
 };
 
-export const signInUser = createAsyncThunk<UserDto, LoginDto>('account/signInUser', async (loginDto, thunkAPI: any) => {
-    try {
-        const user = await agent.Account.login(loginDto);
-        localStorage.setItem('user', JSON.stringify(user));
-        return user;
-    } catch (error: any) {
-        return thunkAPI.rejectWithValue({ error: error.data });
-    }
-});
+export const signInUser = createAsyncThunk<UserDto, LoginQuery>(
+    'account/signInUser',
+    async (loginDto, thunkAPI: any) => {
+        try {
+            const user = await agent.Account.login(loginDto);
+            localStorage.setItem('user', JSON.stringify(user));
+            return user;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.data });
+        }
+    },
+);
 
-export const registerUser = createAsyncThunk<UserDto, RegisterDto>(
+export const registerUser = createAsyncThunk<UserDto, RegisterCommand>(
     'account/registerUser',
     async (registerDto, thunkAPI: any) => {
         try {

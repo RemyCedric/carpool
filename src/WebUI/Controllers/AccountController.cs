@@ -1,20 +1,20 @@
 using Carpool.Application.Features.Account.Commands.Register;
+using Carpool.Application.Features.Account.Commands.ResetPassword;
 using Carpool.Application.Features.Account.Queries.CurrentUser;
+using Carpool.Application.Features.Account.Queries.ForgotPassword;
 using Carpool.Application.Features.Account.Queries.Login;
-using Microsoft.AspNetCore.WebUtilities;
+using Carpool.Application.Features.Account.Queries.ResendConfirmationEmail;
+using Carpool.Application.Features.Account.Queries.VerifyEmail;
 
 namespace Carpool.WebUI.Controllers;
 
 [Authorize]
 public class AccountController : ApiControllerBase
 {
-
-    private readonly UserManager<ApplicationUser> _userManager;
     private readonly TokenService _tokenService;
     private readonly IEmailSender _emailSender;
-    public AccountController(UserManager<ApplicationUser> userManager, TokenService tokenService, IEmailSender emailSender)
+    public AccountController(TokenService tokenService, IEmailSender emailSender)
     {
-        _userManager = userManager;
         _tokenService = tokenService;
         _emailSender = emailSender;
     }
@@ -23,10 +23,11 @@ public class AccountController : ApiControllerBase
     [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
     [HttpPost("login")]
-    public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+    public async Task<ActionResult<UserDto>> Login(LoginQuery query)
     {
-        var userLogged = await Mediator.Send(new LoginQuery { Email = loginDto.Email, Password = loginDto.Password });
+        var userLogged = await Mediator.Send(query);
 
         if (string.IsNullOrEmpty(userLogged.UserName)) return BadRequest("Invalid email or password");
 
@@ -37,50 +38,31 @@ public class AccountController : ApiControllerBase
     }
 
     [AllowAnonymous]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpPost("register")]
-    public async Task<ActionResult<string>> Register(RegisterDto registerDto)
+    public async Task<ActionResult<string>> Register(RegisterCommand command)
     {
-        var userRegistered = await Mediator.Send(new RegisterCommand
-        {
-            Email = registerDto.Email,
-            Password = registerDto.Password,
-            Username = registerDto.Username
-        });
+        var token = await Mediator.Send(command);
 
-        if (userRegistered is null) return BadRequest("Problem registering user");
+        if (String.IsNullOrEmpty(token)) return Ok();
 
+        await SendVerificationEmail(command.Email, token);
 
-
-        var origin = Request.Headers["origin"];
-        var token = await _userManager.GenerateEmailConfirmationTokenAsync(userRegistered);
-        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-
-        var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={userRegistered.Email}";
-        var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify Email</a></p>";
-
-        await _emailSender.SendEmailAsync(userRegistered.Email, "Please verify email", message);
-
-        return Ok("Registration success - please verify email");
+        return Ok();
     }
 
     [AllowAnonymous]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpPost("verifyEmail")]
-    public async Task<IActionResult> VerifyEmail(string token, string email)
+    public async Task<IActionResult> VerifyEmail([FromQuery] VerifyEmailQuery query)
     {
-        var user = await _userManager.FindByEmailAsync(email);
+        query.Token = _tokenService.DecodeToken(query.Token);
 
-        if (user is null) return Unauthorized();
+        var succeeded = await Mediator.Send(query);
 
-        var decodeTokenBytes = WebEncoders.Base64UrlDecode(token);
-        var decodeToken = Encoding.UTF8.GetString(decodeTokenBytes);
-        var result = await _userManager.ConfirmEmailAsync(user, decodeToken);
-
-        if (!result.Succeeded) return BadRequest("Could not verify email address");
+        if (!succeeded) return BadRequest("Could not verify email address");
 
         return Ok("Email confirmed you can now login");
     }
@@ -88,70 +70,46 @@ public class AccountController : ApiControllerBase
 
     [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("resendEmailConfirmationLink")]
-    public async Task<IActionResult> ResendEmailConfirmationLink(string email)
+    public async Task<IActionResult> ResendEmailConfirmationLink([FromQuery] string email)
     {
-        var user = await _userManager.FindByEmailAsync(email);
+        var token = await Mediator.Send(new ResendConfirmationEmailQuery { Email = email });
 
-        if (user is null) return Unauthorized();
+        if (String.IsNullOrEmpty(token)) return BadRequest();
 
-        var origin = Request.Headers["origin"];
-        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+        await SendVerificationEmail(email, token);
 
-        var verifyUrl = $"{origin}/verifyEmail?token={token}&email={user.Email}";
-        var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify Email</a></p><p>The link will be alive two hours</p>";
-
-        await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
-
-        return Ok("Verification email resent - please verify email");
-    }
-
-    [AllowAnonymous]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
-    [HttpPost("forgotPassword")]
-    public async Task<IActionResult> ForgotPassword(string email)
-    {
-        var user = await _userManager.FindByEmailAsync(email);
-
-        if (user is null) return Unauthorized();
-        var origin = Request.Headers["origin"];
-
-        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-        var resetUrl = $"{origin}/resetPassword?token={token}&email={user.Email}";
-        var message = $"<p>Please click the below link to reset your password:</p><p><a href='{resetUrl}'>Click to reset Password</a></p><p>The link will be alive two hours</p>";
-
-        await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
-
-        return Ok("Reset email sent - please verify email");
+        return Ok();
     }
 
     [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
-    [HttpPost("resetPassword")]
-    public async Task<IActionResult> ResetPassword(string email, string token, string password)
+    [HttpPost("forgotPassword")]
+    public async Task<IActionResult> ForgotPassword(string email)
     {
-        var user = await _userManager.FindByEmailAsync(email);
+        var token = await Mediator.Send(new ForgotPasswordQuery { Email = email });
 
-        if (user is null) return Unauthorized();
+        if (String.IsNullOrEmpty(token)) return BadRequest();
 
-        var resetPasswordResult = await _userManager.ResetPasswordAsync(user, token, password);
-        if (!resetPasswordResult.Succeeded)
-        {
-            foreach (var error in resetPasswordResult.Errors)
-            {
-                ModelState.TryAddModelError(error.Code, error.Description);
-            }
-            return ValidationProblem();
-        }
-        return Ok("Password reset");
+        await SendForgotPasswordEmail(email, token);
+
+        return Ok();
+    }
+
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(void))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [HttpPost("resetPassword")]
+    public async Task<IActionResult> ResetPassword(ResetPasswordCommand command)
+    {
+        command.Token = _tokenService.DecodeToken(command.Token);
+        var succeeded = await Mediator.Send(command);
+
+        if (!succeeded) return BadRequest();
+
+        return Ok();
     }
 
 
@@ -167,5 +125,29 @@ public class AccountController : ApiControllerBase
     private UserDto CreateUserObject(ApplicationUser user)
     {
         return new UserDto { Token = _tokenService.CreateToken(user), Username = user.UserName };
+    }
+
+    private async Task SendVerificationEmail(string email, string token)
+    {
+        var origin = Request.Headers["origin"];
+
+        token = _tokenService.EncodeToken(token);
+
+        var verifyUrl = $"{origin}/verifyEmail?token={token}&email={email}";
+        var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify Email</a></p><p>The link will be alive two hours</p>";
+
+        await _emailSender.SendEmailAsync(email, "Please verify email", message);
+    }
+
+    private async Task SendForgotPasswordEmail(string email, string token)
+    {
+        var origin = Request.Headers["origin"];
+
+        token = _tokenService.EncodeToken(token);
+
+        var resetUrl = $"{origin}/resetPassword?token={token}&email={email}";
+        var message = $"<p>Please click the below link to reset your password:</p><p><a href='{resetUrl}'>Click to reset Password</a></p><p>The link will be alive two hours</p>";
+
+        await _emailSender.SendEmailAsync(email, "Please verify email", message);
     }
 }
