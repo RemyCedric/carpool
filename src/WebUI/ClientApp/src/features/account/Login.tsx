@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { LoginDto } from '../../app/api/web-api-dtos';
+import { LoginQuery } from '../../app/api/web-api-dtos';
 import { signInUser } from './AccountSlice';
 import { useAppDispatch } from '../../app/store';
 import Copyright from './Copyright';
@@ -25,10 +25,10 @@ export default function Login(): React.ReactElement {
         register,
         handleSubmit,
         formState: { isSubmitting, errors, isValid },
-    } = useForm<LoginDto>({ mode: 'onTouched', reValidateMode: 'onChange' });
+    } = useForm<LoginQuery>({ mode: 'onTouched', reValidateMode: 'onChange' });
 
     async function submitForm(loginDto: FieldValues) {
-        await dispatch(signInUser(loginDto as LoginDto));
+        await dispatch(signInUser(loginDto as LoginQuery));
         navigate(location.state && location.state.from !== '/register' ? location.state.from : '/');
     }
 

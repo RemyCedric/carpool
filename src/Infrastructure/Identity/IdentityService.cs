@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-namespace Carpool.Infrastructure.Identity;
+﻿namespace Carpool.Infrastructure.Identity;
 
 public class IdentityService : IIdentityService
 {
@@ -61,5 +59,31 @@ public class IdentityService : IIdentityService
         var user = await _userManager.Users
             .SingleOrDefaultAsync(x => x.Email == email);
         return user!;
+    }
+
+    public async Task<string> GetEmailConfirmationTokenAsync(ApplicationUser user)
+    {
+        return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+    }
+    public async Task<string> GetResetPasswordTokenAsync(ApplicationUser user)
+    {
+        return await _userManager.GeneratePasswordResetTokenAsync(user);
+    }
+
+    public async Task<ApplicationUser> GetUserByEmailAsync(string email)
+    {
+        return await _userManager.FindByEmailAsync(email);
+    }
+
+    public async Task<Result> ResetPasswordAsync(ApplicationUser user, string token, string password)
+    {
+        var result = await _userManager.ResetPasswordAsync(user, token, password);
+        return result.ToApplicationResult();
+    }
+
+    public async Task<Result> VerifyResetPasswordTokenAsync(ApplicationUser user, string token)
+    {
+        var result = await _userManager.ConfirmEmailAsync(user, token);
+        return result.ToApplicationResult();
     }
 }

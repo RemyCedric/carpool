@@ -17,7 +17,7 @@ import Container from '@mui/material/Container';
 import Copyright from './Copyright';
 import { useAppDispatch } from '../../app/store';
 import { registerUser } from './AccountSlice';
-import { RegisterDto } from '../../app/api/web-api-dtos';
+import { RegisterCommand } from '../../app/api/web-api-dtos';
 
 export default function SignUp(): React.ReactElement {
     const navigate = useNavigate();
@@ -29,7 +29,7 @@ export default function SignUp(): React.ReactElement {
         handleSubmit,
         setError,
         formState: { isSubmitting, errors, isValid },
-    } = useForm<RegisterDto>({ mode: 'all', reValidateMode: 'onChange' });
+    } = useForm<RegisterCommand>({ mode: 'all', reValidateMode: 'onChange' });
 
     function handleApiErrors(apiErrors: any) {
         Object.keys(apiErrors).forEach((key) => {
@@ -52,7 +52,7 @@ export default function SignUp(): React.ReactElement {
     }
 
     async function submitForm(registerDto: FieldValues) {
-        await dispatch(registerUser(registerDto as RegisterDto)).then(({ payload }: any) => {
+        await dispatch(registerUser(registerDto as RegisterCommand)).then(({ payload }: any) => {
             if ({}.hasOwnProperty.call(payload, 'error') && {}.hasOwnProperty.call(payload.error, 'errors')) {
                 handleApiErrors(payload.error.errors);
             } else {
