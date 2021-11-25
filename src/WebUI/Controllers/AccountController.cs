@@ -91,7 +91,7 @@ public class AccountController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
     [HttpGet("resendEmailConfirmationLink")]
-    public async Task<IActionResult> resendEmailConfirmationLink(string email)
+    public async Task<IActionResult> ResendEmailConfirmationLink(string email)
     {
         var user = await _userManager.FindByEmailAsync(email);
 
@@ -102,7 +102,7 @@ public class AccountController : ApiControllerBase
         token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
         var verifyUrl = $"{origin}/verifyEmail?token={token}&email={user.Email}";
-        var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify Email</a></p>";
+        var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify Email</a></p><p>The link will be alive two hours</p>";
 
         await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
 
@@ -113,8 +113,8 @@ public class AccountController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
-    [HttpPost("resetPassword")]
-    public async Task<IActionResult> resetPassword(string email)
+    [HttpPost("forgotPassword")]
+    public async Task<IActionResult> ForgotPassword(string email)
     {
         var user = await _userManager.FindByEmailAsync(email);
 
@@ -124,12 +124,36 @@ public class AccountController : ApiControllerBase
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
         var resetUrl = $"{origin}/resetPassword?token={token}&email={user.Email}";
-        var message = $"<p>Please click the below link to reset your password:</p><p><a href='{resetUrl}'>Click to reset Password</a></p>";
+        var message = $"<p>Please click the below link to reset your password:</p><p><a href='{resetUrl}'>Click to reset Password</a></p><p>The link will be alive two hours</p>";
 
         await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
 
         return Ok("Reset email sent - please verify email");
     }
+
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(void))]
+    [HttpPost("resetPassword")]
+    public async Task<IActionResult> ResetPassword(string email, string token, string password)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        if (user is null) return Unauthorized();
+
+        var resetPasswordResult = await _userManager.ResetPasswordAsync(user, token, password);
+        if (!resetPasswordResult.Succeeded)
+        {
+            foreach (var error in resetPasswordResult.Errors)
+            {
+                ModelState.TryAddModelError(error.Code, error.Description);
+            }
+            return ValidationProblem();
+        }
+        return Ok("Password reset");
+    }
+
 
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]

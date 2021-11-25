@@ -15,7 +15,8 @@ public static class DependencyInjection
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddSignInManager<SignInManager<ApplicationUser>>()
                 .AddDefaultTokenProviders();
-
+        services.Configure<DataProtectionTokenProviderOptions>(opt =>
+           opt.TokenLifespan = TimeSpan.FromHours(2));
 
         if (configuration.GetValue<bool>("UseInMemoryDatabase"))
         {
