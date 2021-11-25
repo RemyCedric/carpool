@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchCurrentUser } from '../../features/account/AccountSlice';
+import ConfirmEmail from '../../features/account/ConfirmEmail';
 import Login from '../../features/account/Login';
 import Register from '../../features/account/Register';
 import RegisterSuccess from '../../features/account/RegisterSuccess';
@@ -17,7 +18,6 @@ function App(): React.ReactElement {
     const { loading, user } = useAppSelector((state) => state.account);
 
     useEffect(() => {
-        console.log('useEffect App');
         dispatch(fetchCurrentUser());
     }, [dispatch]);
 
@@ -50,6 +50,10 @@ function App(): React.ReactElement {
                         <Route
                             path="/registerSuccess"
                             element={user ? <Navigate replace to="/events" /> : <RegisterSuccess />}
+                        />
+                        <Route
+                            path="/verifyEmail"
+                            element={user ? <Navigate replace to="/events" /> : <ConfirmEmail />}
                         />
                     </Routes>
                 )}

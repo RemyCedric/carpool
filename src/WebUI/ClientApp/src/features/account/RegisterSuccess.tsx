@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -34,7 +33,6 @@ export default function RegisterSuccess(): React.ReactElement {
                 emailTimer = setTimeout(() => {
                     setDisabled(false);
                 }, 3000);
-                console.log(emailTimer);
             })
             .finally(() => setLoading(false));
     }
@@ -59,7 +57,7 @@ export default function RegisterSuccess(): React.ReactElement {
                         <Typography mt={10} variant="h6" fontWeight="bold">
                             Please check your email (including junk email) for the verification email
                         </Typography>
-                        <Typography variant="subtitle2" sx={{ mt: 5 }} align="inherit">
+                        <Typography variant="subtitle2" sx={{ mt: 5 }}>
                             Didn t receive the email ? Click the below button
                         </Typography>
                         <LoadingButton
