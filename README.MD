@@ -4,7 +4,7 @@
 
 ## Technologies
 
-* [ASP.NET Core 6](https://docs.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-6.0)
+* [ASP .NET 6](https://docs.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-6.0)
 * [Entity Framework Core 6](https://docs.microsoft.com/en-us/ef/core/)
 * [React 17](https://reactjs.org/)
 * [MediatR](https://github.com/jbogard/MediatR)
