@@ -4,7 +4,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -31,22 +30,22 @@ export default function Header(): React.ReactElement {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" color="transparent">
                 <Toolbar>
-                    <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                        <MenuIcon />
-                    </IconButton>
-                    <Link
-                        component={RouterLink}
-                        to="/"
-                        variant="h6"
-                        color="inherit"
-                        underline="none"
-                        sx={{ flexGrow: 1 }}
-                    >
-                        Carpool
-                    </Link>
-                    <div>
+                    <nav>
+                        <Link
+                            component={RouterLink}
+                            to="/"
+                            variant="h6"
+                            color="inherit"
+                            underline="none"
+                            sx={{ flexGrow: 1 }}
+                        >
+                            Carpool
+                        </Link>
+                    </nav>
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -75,7 +74,7 @@ export default function Header(): React.ReactElement {
                             <MenuItem onClick={handleClose}>Profile</MenuItem>
                             <MenuItem onClick={handleLogOut}>Logout</MenuItem>
                         </Menu>
-                    </div>
+                    </Box>
                 </Toolbar>
             </AppBar>
         </Box>

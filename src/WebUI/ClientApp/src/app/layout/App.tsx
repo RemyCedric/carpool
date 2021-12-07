@@ -27,7 +27,7 @@ function App(): React.ReactElement {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth={false} disableGutters>
+            <Container maxWidth={false} disableGutters>
                 <ToastContainer position="bottom-right" theme="colored" hideProgressBar />
                 <CssBaseline />
                 {loading ? (

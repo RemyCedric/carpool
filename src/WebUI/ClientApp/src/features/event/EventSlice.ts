@@ -7,11 +7,13 @@ import { EventDto } from '../../app/api/web-api-dtos';
 
 interface EventState {
     events: EventDto[] | null;
+    selectedEvent: EventDto | null;
     loading: boolean;
 }
 
 const initialState: EventState = {
     events: null,
+    selectedEvent: null,
     loading: true,
 };
 
@@ -19,6 +21,10 @@ export const getEvents = createAsyncThunk<EventDto[]>('event/getEvents', async (
     thunkAPI.dispatch(setLoading(true));
     try {
         const events = await agent.Event.get();
+        if (events.length > 1) {
+            // eslint-disable-next-line prefer-destructuring
+            thunkAPI.dispatch(setSelectedEvent(events[0]));
+        }
         return events;
     } catch (error: any) {
         return thunkAPI.rejectWithValue({ error: error.data });
@@ -32,6 +38,9 @@ export const eventSlice = createSlice({
         setLoading: (state, action) => {
             state.loading = action.payload;
         },
+        setSelectedEvent: (state, action) => {
+            state.selectedEvent = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getEvents.fulfilled, (state, action) => {
@@ -44,4 +53,4 @@ export const eventSlice = createSlice({
     },
 });
 
-export const { setLoading } = eventSlice.actions;
+export const { setLoading, setSelectedEvent } = eventSlice.actions;
