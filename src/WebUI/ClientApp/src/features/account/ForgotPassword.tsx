@@ -1,35 +1,60 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { LoginQuery } from '../../app/api/web-api-dtos';
-import { signInUser } from './AccountSlice';
+import { Password } from '@mui/icons-material';
+import { useState } from 'react';
+import { forgotPassword } from './AccountSlice';
 import { useAppDispatch } from '../../app/store';
 import Copyright from './Copyright';
 
-export default function Login(): React.ReactElement {
-    const navigate = useNavigate();
-    const location = useLocation();
+export default function ForgotPassword(): React.ReactElement {
     const dispatch = useAppDispatch();
+    const [emailSent, setEmailSent] = useState<boolean>(false);
+
     const {
         register,
+        getValues,
+        setError,
         handleSubmit,
         formState: { isSubmitting, errors, isValid },
-    } = useForm<LoginQuery>({ mode: 'onTouched', reValidateMode: 'onChange' });
+    } = useForm<{ email: string; confirmEmail: string }>({ mode: 'onTouched', reValidateMode: 'onChange' });
 
-    async function submitForm(loginDto: FieldValues) {
-        await dispatch(signInUser(loginDto as LoginQuery));
-        navigate(location.state && location.state.from !== '/register' ? location.state.from : '/');
+    function handleApiErrors(apiErrors: any) {
+        Object.keys(apiErrors).forEach((key) => {
+            Object.values(apiErrors[key]).forEach((apiError: any) => {
+                switch (key.toLowerCase()) {
+                    case 'email':
+                        setError('email', { message: apiError });
+                        break;
+
+                    default:
+                        break;
+                }
+            });
+        });
+    }
+
+    async function submitForm(values: FieldValues) {
+        await dispatch(forgotPassword(values.email as string)).then(({ payload }: any) => {
+            if ({}.hasOwnProperty.call(payload, 'error')) {
+                if ({}.hasOwnProperty.call(payload.error, 'errors')) {
+                    handleApiErrors(payload.error.errors);
+                }
+            } else {
+                setEmailSent(true);
+            }
+        });
     }
 
     return (
@@ -43,10 +68,10 @@ export default function Login(): React.ReactElement {
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
+                    <Password />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Password Forgotten
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit(submitForm)} noValidate sx={{ mt: 1 }}>
                     <TextField
@@ -62,33 +87,33 @@ export default function Login(): React.ReactElement {
                     <TextField
                         margin="normal"
                         fullWidth
-                        label="Password"
-                        type="password"
-                        {...register('password', {
-                            required: 'password required',
+                        label="Confirm Email Address"
+                        {...register('confirmEmail', {
+                            required: 'confirm email required',
+                            validate: (value) => value === getValues('email') || `The emails aren't identical`,
                         })}
-                        error={!!errors.password}
-                        helperText={errors.password?.message}
+                        error={!!errors.confirmEmail}
+                        helperText={errors.confirmEmail?.message}
                     />
                     <LoadingButton
-                        disabled={!isValid}
+                        disabled={!isValid || emailSent}
                         loading={isSubmitting}
                         type="submit"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign In
+                        Send Email
                     </LoadingButton>
+                    {emailSent && (
+                        <Typography mt={2} variant="subtitle2" fontWeight="bold">
+                            Please check your email (including junk email) for the verification email
+                        </Typography>
+                    )}
                     <Grid container>
                         <Grid item xs>
-                            <Link component={RouterLink} to="/passwordForgotten" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link component={RouterLink} to="/register" variant="body2">
-                                Don&apos;t have an account? Sign Up
+                            <Link component={RouterLink} to="/login" variant="body2">
+                                Back to Sign-in?
                             </Link>
                         </Grid>
                     </Grid>

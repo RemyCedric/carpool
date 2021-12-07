@@ -29,10 +29,7 @@ public class AccountController : ApiControllerBase
     {
         var userLogged = await Mediator.Send(query);
 
-        if (string.IsNullOrEmpty(userLogged.UserName)) return BadRequest("Invalid email or password");
-
-        if (!userLogged.EmailConfirmed) return Unauthorized("Email not confirmed");
-
+        if (string.IsNullOrEmpty(userLogged.UserName)) return BadRequest("Invalid email, password or email not confirmed yet");
 
         return Ok(CreateUserObject(userLogged));
     }
@@ -134,6 +131,7 @@ public class AccountController : ApiControllerBase
         token = _tokenService.EncodeToken(token);
 
         var verifyUrl = $"{origin}/verifyEmail?token={token}&email={email}";
+
         var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify Email</a></p><p>The link will be alive two hours</p>";
 
         await _emailSender.SendEmailAsync(email, "Please verify email", message);
