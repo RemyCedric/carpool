@@ -6,9 +6,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchCurrentUser } from '../../features/account/AccountSlice';
 import ConfirmEmail from '../../features/account/ConfirmEmail';
+import ForgotPassword from '../../features/account/ForgotPassword';
 import Login from '../../features/account/Login';
 import Register from '../../features/account/Register';
 import RegisterSuccess from '../../features/account/RegisterSuccess';
+import ResetPassword from '../../features/account/ResetPassword';
 import { useAppDispatch, useAppSelector } from '../store';
 import Main from './main/Main';
 import RequireAuth from './RequireAuth';
@@ -54,6 +56,14 @@ function App(): React.ReactElement {
                         <Route
                             path="/verifyEmail"
                             element={user ? <Navigate replace to="/events" /> : <ConfirmEmail />}
+                        />
+                        <Route
+                            path="/passwordForgotten"
+                            element={user ? <Navigate replace to="/events" /> : <ForgotPassword />}
+                        />
+                        <Route
+                            path="/resetPassword"
+                            element={user ? <Navigate replace to="/events" /> : <ResetPassword />}
                         />
                     </Routes>
                 )}

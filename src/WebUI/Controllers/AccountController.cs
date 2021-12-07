@@ -23,16 +23,12 @@ public class AccountController : ApiControllerBase
     [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginQuery query)
     {
         var userLogged = await Mediator.Send(query);
 
-        if (string.IsNullOrEmpty(userLogged.UserName)) return BadRequest("Invalid email or password");
-
-        if (!userLogged.EmailConfirmed) return Unauthorized("Email not confirmed");
-
+        if (string.IsNullOrEmpty(userLogged.UserName)) return BadRequest("Invalid email, password or email not confirmed yet");
 
         return Ok(CreateUserObject(userLogged));
     }

@@ -2,7 +2,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { store } from '../store';
-import { LoginQuery, RegisterCommand, UserDto } from './web-api-dtos';
+import { LoginQuery, RegisterCommand, UserDto, ResetPasswordCommand } from './web-api-dtos';
 //  import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
@@ -55,6 +55,9 @@ const Account = {
         requests.post<void>(`account/verifyEmail?token=${token}&email=${email}`, {}),
     resendEmailConfirmation: (email: string): Promise<void> =>
         requests.get<void>(`account/resendEmailConfirmationLink?email=${email}`),
+    forgotPassword: (email: string): Promise<void> => requests.post<void>(`account/forgotPassword?email=${email}`, {}),
+    resetPassword: (command: ResetPasswordCommand): Promise<void> =>
+        requests.post<void>(`account/resetPassword`, command),
 };
 
 const Event = {

@@ -5,7 +5,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import agent from '../../app/api/agent';
-import { LoginQuery, RegisterCommand, UserDto } from '../../app/api/web-api-dtos';
+import { LoginQuery, RegisterCommand, ResetPasswordCommand, UserDto } from '../../app/api/web-api-dtos';
 
 interface AccountState {
     user: UserDto | null;
@@ -35,6 +35,25 @@ export const registerUser = createAsyncThunk<UserDto, RegisterCommand>(
     async (registerDto, thunkAPI: any) => {
         try {
             return await agent.Account.register(registerDto);
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.data });
+        }
+    },
+);
+
+export const forgotPassword = createAsyncThunk<void, string>('account/forgotPassword', async (email, thunkAPI: any) => {
+    try {
+        return await agent.Account.forgotPassword(email);
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue({ error: error.data });
+    }
+});
+
+export const resetPassword = createAsyncThunk<void, ResetPasswordCommand>(
+    'account/resetPassword',
+    async (command, thunkAPI: any) => {
+        try {
+            return await agent.Account.resetPassword(command);
         } catch (error: any) {
             return thunkAPI.rejectWithValue({ error: error.data });
         }
@@ -93,7 +112,13 @@ export const accountSlice = createSlice({
             state.loading = false;
             localStorage.removeItem('user');
         });
-        builder.addCase(signInUser.rejected, () => {
+        builder.addCase(signInUser.rejected, (_, action: any) => {
+            console.log(action);
+            if ({}.hasOwnProperty.call(action, 'payload') && {}.hasOwnProperty.call(action.payload, 'error')) {
+                toast.error(action.payload.error);
+            } else if ({}.hasOwnProperty.call(action, 'error')) {
+                toast.error(action.error);
+            }
             localStorage.removeItem('user');
         });
         builder.addMatcher(isAnyOf(signInUser.fulfilled), (state, action) => {
