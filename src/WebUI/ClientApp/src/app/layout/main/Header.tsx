@@ -1,27 +1,21 @@
 import * as React from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import { Link } from '@mui/material';
+import { Avatar, Typography, Button, Link } from '@mui/material';
 import { useAppDispatch } from '../../store';
 import { signOut } from '../../../features/account/AccountSlice';
 
-export default function Header(): React.ReactElement {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+interface HeaderProps {
+    sections: ReadonlyArray<{
+        title: string;
+        url: string;
+    }>;
+}
+
+export default function Header({ sections }: HeaderProps): React.ReactElement {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     const handleLogOut = () => {
         dispatch(signOut());
@@ -29,54 +23,33 @@ export default function Header(): React.ReactElement {
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" color="transparent">
-                <Toolbar>
-                    <nav>
-                        <Link
-                            component={RouterLink}
-                            to="/"
-                            variant="h6"
-                            color="inherit"
-                            underline="none"
-                            sx={{ flexGrow: 1 }}
-                        >
-                            Carpool
-                        </Link>
-                    </nav>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleMenu}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                        >
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
-                            <MenuItem onClick={handleLogOut}>Logout</MenuItem>
-                        </Menu>
-                    </Box>
-                </Toolbar>
-            </AppBar>
-        </Box>
+        <>
+            <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Avatar variant="square" src="/assets/carpool.png" sx={{ border: 0, objectFit: 'cover' }} />
+                <Typography component="h2" variant="h5" color="inherit" align="center" noWrap sx={{ flex: 1 }}>
+                    Carpool PTC
+                </Typography>
+                <Button size="small" color="inherit">
+                    <AccountCircle />
+                </Button>
+                <Button variant="outlined" onClick={handleLogOut} color="inherit" size="small">
+                    Logout
+                </Button>
+            </Toolbar>
+            <Toolbar component="nav" variant="dense" sx={{ justifyContent: 'center', overflowX: 'auto' }}>
+                {sections.map((section) => (
+                    <Link
+                        component={RouterLink}
+                        color="inherit"
+                        noWrap
+                        key={section.title}
+                        variant="body2"
+                        to={section.url}
+                    >
+                        {section.title}
+                    </Link>
+                ))}
+            </Toolbar>
+        </>
     );
 }

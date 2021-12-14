@@ -7,9 +7,10 @@ import Header from './Header';
 import NotFound from './NotFound';
 
 export default function Main(): React.ReactElement {
+    const sections = [{ title: 'Events', url: '/events' }];
     return (
         <>
-            <Header />
+            <Header sections={sections} />
             <Container component="main" maxWidth="lg">
                 <Routes>
                     <Route path="/events" element={<Events />} />
